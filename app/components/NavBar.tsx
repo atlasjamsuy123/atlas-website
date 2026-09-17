@@ -25,10 +25,7 @@ export default function NavBar() {
         {/* Logo */}
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3">
           <Image src="/images/AtlasGameShopLogo.png" alt="Atlas" width={32} height={32} />
-          <div className="text-left">
-            <div className="text-white text-sm font-light tracking-wider leading-tight">Atlas Game Shop</div>
-            <div className="text-zinc-500 text-xs tracking-wide leading-tight">Play Steam, EA, Ubisoft and Denuvo games instantly.</div>
-          </div>
+          <div className="text-white text-sm font-light tracking-wider">Atlas Game Shop</div>
         </button>
 
         {/* Nav Links */}
