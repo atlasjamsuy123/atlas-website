@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Atlas Game Shop - Gaming Tools & Steam Games Terpercaya",
-  description: "Solusi terpercaya untuk Atlas Tools dan Steam Games. Aktivasi instan, support 24/7, dipercaya ribuan gamer Indonesia.",
+  title: "Atlas Game Shop",
+  description: "Atlas Game Shop",
   keywords: ["atlas tools", "steam games", "gaming tools", "game shop indonesia", "atlas game shop"],
   authors: [{ name: "Atlas Game Shop" }],
   openGraph: {
-    title: "Atlas Game Shop - Gaming Tools Terpercaya",
-    description: "Solusi terpercaya untuk Atlas Tools dan Steam Games",
+    title: "Atlas Game Shop",
+    description: "Atlas Game Shop",
     type: "website",
   },
 };
