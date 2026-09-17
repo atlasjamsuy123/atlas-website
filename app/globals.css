@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0010;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0010;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a855f7;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-272px * 25)); /* 264px width + 8px gap = 272px per item, 25 items */
+  }
+}
+
+.animate-scroll {
+  animation: scroll 60s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* 3D Perspective */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-y-12 {
+  transform: rotateY(12deg) rotateX(6deg);
+}
+
+.-rotate-y-12 {
+  transform: rotateY(-12deg) rotateX(6deg);
+}
+
+.rotate-x-6 {
+  transform: rotateY(12deg) rotateX(6deg);
+}
+
+.-rotate-x-6 {
+  transform: rotateY(12deg) rotateX(-6deg);
+}
+
+.group:hover .group-hover\:rotate-y-0 {
+  transform: rotateY(0deg) rotateX(0deg) !important;
+}
+
+.group:hover .group-hover\:rotate-x-0 {
+  transform: rotateY(0deg) rotateX(0deg) !important;
+}
+
+/* Game Carousel Rows */
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scrollRight {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+  animation: scrollLeft 40s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.animate-scroll-right {
+  animation: scrollRight 50s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+.animate-scroll-left-slow {
+  animation: scrollLeft 60s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Flicker Animation */
+@keyframes flicker {
+  0%   { opacity: 0.70; }
+  4%   { opacity: 0.20; }
+  6%   { opacity: 0.70; }
+  8%   { opacity: 0.15; }
+  10%  { opacity: 0.70; }
+  40%  { opacity: 0.70; }
+  42%  { opacity: 0.10; }
+  44%  { opacity: 0.65; }
+  46%  { opacity: 0.20; }
+  48%  { opacity: 0.70; }
+  70%  { opacity: 0.70; }
+  72%  { opacity: 0.30; }
+  74%  { opacity: 0.70; }
+  100% { opacity: 0.70; }
+}
+
+.animate-flicker {
+  animation: flicker 4s ease-in-out infinite;
+}
+
+/* Floating Shapes */
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-18px) rotate(3deg); }
+  66% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-22px) rotate(-4deg); }
+  66% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.animate-float-1 { animation: float1 7s ease-in-out infinite; }
+.animate-float-2 { animation: float2 9s ease-in-out infinite; }
+.animate-float-3 { animation: float3 11s ease-in-out infinite; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-white {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
+
+.star-purple {
+  background: rgba(168, 85, 247, 0.6);
+  box-shadow: 0 0 6px rgba(168, 85, 247, 0.8);
+}
+
+.star-yellow {
+  background: rgba(250, 204, 21, 0.6);
+  box-shadow: 0 0 6px rgba(250, 204, 21, 0.8);
+}
