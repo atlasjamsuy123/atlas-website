@@ -8,7 +8,7 @@ export default function InvisigalCharacter() {
 
   return (
     <div
-      className="absolute bottom-0 flex items-end pointer-events-auto z-0"
+      className="absolute bottom-0 hidden md:flex items-end pointer-events-auto z-0"
       style={{ right: "-320px", bottom: "-80px" }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

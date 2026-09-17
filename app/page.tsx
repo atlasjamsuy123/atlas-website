@@ -120,7 +120,7 @@ export default function Home() {
       {/* Features Section */}
       <section id="features" className="py-32 border-b border-zinc-800 relative overflow-hidden">
         {/* Character Left - James Bond */}
-        <div className="absolute left-0 bottom-0 flex items-end pointer-events-none z-0" style={{left: "-60px"}}>
+        <div className="absolute left-0 bottom-0 hidden md:flex items-end pointer-events-none z-0" style={{left: "-60px"}}>
           <Image
             src="/characters/JB.png"
             alt="James Bond"
@@ -144,29 +144,29 @@ export default function Home() {
 
           <div className="max-w-3xl mx-auto space-y-10">
             {/* Row 1 - Left */}
-            <div className="flex items-center gap-8 group">
-              <div className="flex-shrink-0 w-20 h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
-                <svg className="w-9 h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <div className="flex items-center gap-6 group">
+              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
+                <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                 </svg>
               </div>
               <div>
-                <span className="text-3xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
+                <span className="text-xl sm:text-2xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
                   Buy One Get One Free
                 </span>
                 <p className="text-zinc-500 text-sm mt-2">Purchase one game and get another title of equal or lesser value completely free.</p>
               </div>
             </div>
 
-            {/* Row 2 - Right */}
-            <div className="flex items-center gap-8 flex-row-reverse group">
-              <div className="flex-shrink-0 w-20 h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
-                <svg className="w-9 h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            {/* Row 2 - Right (on mobile: same left-to-right layout) */}
+            <div className="flex items-center gap-6 md:flex-row-reverse group">
+              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
+                <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z" />
                 </svg>
               </div>
-              <div className="text-right">
-                <span className="text-3xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
+              <div className="md:text-right">
+                <span className="text-xl sm:text-2xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
                   Handheld Support
                 </span>
                 <p className="text-zinc-500 text-sm mt-2">Fully compatible with handheld devices and other portable gaming hardware with Windows OS.</p>
@@ -174,29 +174,29 @@ export default function Home() {
             </div>
 
             {/* Row 3 - Left */}
-            <div className="flex items-center gap-8 group">
-              <div className="flex-shrink-0 w-20 h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
-                <svg className="w-9 h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <div className="flex items-center gap-6 group">
+              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
+                <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
               </div>
               <div>
-                <span className="text-3xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
+                <span className="text-xl sm:text-2xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
                   Play In Your Account
                 </span>
                 <p className="text-zinc-500 text-sm mt-2">Games are activated directly on your own Steam account — no shared accounts, no remote access needed.</p>
               </div>
             </div>
 
-            {/* Row 4 - Right */}
-            <div className="flex items-center gap-8 flex-row-reverse group">
-              <div className="flex-shrink-0 w-20 h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
-                <svg className="w-9 h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            {/* Row 4 - Right (on mobile: same left-to-right layout) */}
+            <div className="flex items-center gap-6 md:flex-row-reverse group">
+              <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
+                <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <div className="text-right">
-                <span className="text-3xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
+              <div className="md:text-right">
+                <span className="text-xl sm:text-2xl md:text-4xl font-light text-white tracking-wide block" style={{textShadow: "0 0 20px rgba(168,85,247,0.5)"}}>
                   Lifetime Update
                 </span>
                 <p className="text-zinc-500 text-sm mt-2">One-time purchase with lifetime access. All future updates and new game additions are included for free.</p>
