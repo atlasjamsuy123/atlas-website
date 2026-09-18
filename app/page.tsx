@@ -582,6 +582,20 @@ export default function Home() {
             )}
           </div>
 
+          {/* Row 4 - mobile only, scroll right */}
+          <div className="poster-row-mobile flex flex-shrink-0 gap-[2px] animate-scroll-right">
+            {Array.from({ length: 3 }, (_, set) =>
+              Array.from({ length: 22 }, (_, i) => (
+                <img
+                  key={`r4-${set}-${i}`}
+                  src={`/games/${((i + 10) % 65) + 1}.jpg`}
+                  alt=""
+                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
+                />
+              ))
+            )}
+          </div>
+
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/60" />
         </div>

@@ -127,6 +127,17 @@ body {
   }
 }
 
+/* Row 4 - mobile only */
+.poster-row-mobile {
+  height: 180px;
+}
+
+@media (min-width: 768px) {
+  .poster-row-mobile {
+    display: none !important;
+  }
+}
+
 /* Flicker Animation */
 @keyframes flicker {
   0%   { opacity: 0.70; }
