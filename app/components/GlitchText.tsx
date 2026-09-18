@@ -64,11 +64,12 @@ export default function GlitchText() {
   }, []);
 
   return (
+    <div className="mb-12 flex items-center justify-center" style={{ height: "4rem" }}>
     <p
-      className={`text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light tracking-wide ${
+      className={`text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide text-center px-4 ${
         isOrderNow ? "text-purple-400" : "text-zinc-300"
       }`}
-      style={{ fontFamily: "monospace", minHeight: "2rem" }}
+      style={{ fontFamily: "monospace" }}
     >
       {chars.map((c, i) =>
         c.color ? (
@@ -80,5 +81,6 @@ export default function GlitchText() {
         )
       )}
     </p>
+    </div>
   );
 }

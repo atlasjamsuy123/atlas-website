@@ -541,42 +541,42 @@ export default function Home() {
         {/* Game Posters Background - 3 rows carousel */}
         <div className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px] bg-purple-500/40">
           {/* Row 1 - scroll left */}
-          <div className="flex flex-shrink-0 gap-[2px] animate-scroll-left" style={{height: "33.33%"}}>
+          <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left">
             {Array.from({ length: 3 }, (_, set) =>
               Array.from({ length: 22 }, (_, i) => (
                 <img
                   key={`r1-${set}-${i}`}
                   src={`/games/${(i % 65) + 1}.jpg`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block"}}
+                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
                 />
               ))
             )}
           </div>
 
           {/* Row 2 - scroll right */}
-          <div className="flex flex-shrink-0 gap-[2px] animate-scroll-right" style={{height: "33.33%"}}>
+          <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-right">
             {Array.from({ length: 3 }, (_, set) =>
               Array.from({ length: 22 }, (_, i) => (
                 <img
                   key={`r2-${set}-${i}`}
                   src={`/games/${((i + 22) % 65) + 1}.jpg`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block"}}
+                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
                 />
               ))
             )}
           </div>
 
           {/* Row 3 - scroll left slow */}
-          <div className="flex flex-shrink-0 gap-[2px] animate-scroll-left-slow" style={{height: "33.34%"}}>
+          <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left-slow">
             {Array.from({ length: 3 }, (_, set) =>
               Array.from({ length: 22 }, (_, i) => (
                 <img
                   key={`r3-${set}-${i}`}
                   src={`/games/${((i + 44) % 65) + 1}.jpg`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block"}}
+                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
                 />
               ))
             )}

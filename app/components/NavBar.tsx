@@ -21,15 +21,15 @@ export default function NavBar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-zinc-800/50">
-      <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-6 py-4 flex items-center justify-between relative">
         {/* Logo */}
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 z-10">
           <Image src="/images/AtlasGameShopLogo.png" alt="Atlas" width={32} height={32} />
           <div className="text-white text-sm font-light tracking-wider">Atlas Game Shop</div>
         </button>
 
-        {/* Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Nav Links - absolutely centered */}
+        <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
           {navItems.map((item) => (
             <button
               key={item.href}
@@ -44,7 +44,7 @@ export default function NavBar() {
         {/* Order Now CTA */}
         <button
           onClick={() => scrollTo("cta")}
-          className="text-xs tracking-widest text-purple-400 hover:text-purple-300 transition-colors"
+          className="text-xs tracking-widest text-purple-400 hover:text-purple-300 transition-colors z-10"
         >
           ORDER NOW
         </button>
