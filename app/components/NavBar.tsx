@@ -20,7 +20,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-zinc-800/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/70 border-b border-zinc-800/50">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between relative">
         {/* Logo */}
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="flex items-center gap-3 z-10">

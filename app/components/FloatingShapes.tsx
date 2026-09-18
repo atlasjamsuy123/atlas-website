@@ -40,6 +40,7 @@ export default function FloatingShapes() {
             transform: `rotate(${t.rotate}deg)`,
             animation: `floatSpin ${t.duration} ease-in-out infinite`,
             animationDelay: t.delay,
+            willChange: "transform",
           }}
           viewBox="0 0 100 87"
         >
@@ -48,42 +49,41 @@ export default function FloatingShapes() {
             fill="none"
             stroke={t.color}
             strokeWidth="1.5"
-            style={{ filter: `drop-shadow(0 0 6px ${t.color})` }}
           />
         </svg>
       ))}
 
       {/* Circuit corners */}
       <svg className="absolute" style={{ top: "5%", left: "2%", width: 100, opacity: 0.3 }} viewBox="0 0 100 80">
-        <line x1="10" y1="10" x2="55" y2="10" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
-        <line x1="55" y1="10" x2="55" y2="50" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
-        <circle cx="10" cy="10" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #a855f7)" }} />
-        <circle cx="55" cy="50" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #a855f7)" }} />
-        <line x1="55" y1="50" x2="90" y2="50" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
+        <line x1="10" y1="10" x2="55" y2="10" stroke="#a855f7" strokeWidth="1" />
+        <line x1="55" y1="10" x2="55" y2="50" stroke="#a855f7" strokeWidth="1" />
+        <circle cx="10" cy="10" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" />
+        <circle cx="55" cy="50" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" />
+        <line x1="55" y1="50" x2="90" y2="50" stroke="#a855f7" strokeWidth="1" />
       </svg>
 
       <svg className="absolute" style={{ top: "5%", right: "2%", width: 100, opacity: 0.3, transform: "scaleX(-1)" }} viewBox="0 0 100 80">
-        <line x1="10" y1="10" x2="55" y2="10" stroke="#c084fc" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #c084fc)" }} />
-        <line x1="55" y1="10" x2="55" y2="50" stroke="#c084fc" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #c084fc)" }} />
-        <circle cx="10" cy="10" r="3" fill="none" stroke="#c084fc" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #c084fc)" }} />
-        <circle cx="55" cy="50" r="3" fill="none" stroke="#c084fc" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #c084fc)" }} />
-        <line x1="55" y1="50" x2="90" y2="50" stroke="#c084fc" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #c084fc)" }} />
+        <line x1="10" y1="10" x2="55" y2="10" stroke="#c084fc" strokeWidth="1" />
+        <line x1="55" y1="10" x2="55" y2="50" stroke="#c084fc" strokeWidth="1" />
+        <circle cx="10" cy="10" r="3" fill="none" stroke="#c084fc" strokeWidth="1.5" />
+        <circle cx="55" cy="50" r="3" fill="none" stroke="#c084fc" strokeWidth="1.5" />
+        <line x1="55" y1="50" x2="90" y2="50" stroke="#c084fc" strokeWidth="1" />
       </svg>
 
       <svg className="absolute" style={{ bottom: "5%", right: "2%", width: 100, opacity: 0.3, transform: "scale(-1,-1)" }} viewBox="0 0 100 80">
-        <line x1="10" y1="10" x2="55" y2="10" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
-        <line x1="55" y1="10" x2="55" y2="50" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
-        <circle cx="10" cy="10" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #a855f7)" }} />
-        <circle cx="55" cy="50" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #a855f7)" }} />
-        <line x1="55" y1="50" x2="90" y2="50" stroke="#a855f7" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #a855f7)" }} />
+        <line x1="10" y1="10" x2="55" y2="10" stroke="#a855f7" strokeWidth="1" />
+        <line x1="55" y1="10" x2="55" y2="50" stroke="#a855f7" strokeWidth="1" />
+        <circle cx="10" cy="10" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" />
+        <circle cx="55" cy="50" r="3" fill="none" stroke="#a855f7" strokeWidth="1.5" />
+        <line x1="55" y1="50" x2="90" y2="50" stroke="#a855f7" strokeWidth="1" />
       </svg>
 
       <svg className="absolute" style={{ bottom: "5%", left: "2%", width: 100, opacity: 0.3, transform: "scaleY(-1)" }} viewBox="0 0 100 80">
-        <line x1="10" y1="10" x2="55" y2="10" stroke="#7c3aed" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #7c3aed)" }} />
-        <line x1="55" y1="10" x2="55" y2="50" stroke="#7c3aed" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #7c3aed)" }} />
-        <circle cx="10" cy="10" r="3" fill="none" stroke="#7c3aed" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #7c3aed)" }} />
-        <circle cx="55" cy="50" r="3" fill="none" stroke="#7c3aed" strokeWidth="1.5" style={{ filter: "drop-shadow(0 0 5px #7c3aed)" }} />
-        <line x1="55" y1="50" x2="90" y2="50" stroke="#7c3aed" strokeWidth="1" style={{ filter: "drop-shadow(0 0 3px #7c3aed)" }} />
+        <line x1="10" y1="10" x2="55" y2="10" stroke="#7c3aed" strokeWidth="1" />
+        <line x1="55" y1="10" x2="55" y2="50" stroke="#7c3aed" strokeWidth="1" />
+        <circle cx="10" cy="10" r="3" fill="none" stroke="#7c3aed" strokeWidth="1.5" />
+        <circle cx="55" cy="50" r="3" fill="none" stroke="#7c3aed" strokeWidth="1.5" />
+        <line x1="55" y1="50" x2="90" y2="50" stroke="#7c3aed" strokeWidth="1" />
       </svg>
     </div>
   );

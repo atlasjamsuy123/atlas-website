@@ -195,6 +195,7 @@ body {
   position: absolute;
   border-radius: 50%;
   animation: twinkle 3s ease-in-out infinite;
+  will-change: opacity;
 }
 
 .star-white {

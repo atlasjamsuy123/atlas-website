@@ -7,12 +7,14 @@ import FloatingShapes from "./components/FloatingShapes";
 import FAQ from "./components/FAQ";
 import InvisigalCharacter from "./components/InvisigalCharacter";
 import DownloadButton from "./components/DownloadButton";
+import TutorialTabs from "./components/TutorialTabs";
+import FadeIn from "./components/FadeIn";
 
 export default function Home() {
-  // Generate random stars
-  const stars = Array.from({ length: 100 }, (_, i) => {
+  // Generate random stars - reduced count for performance
+  const stars = Array.from({ length: 40 }, (_, i) => {
     const colors = ['star-white', 'star-purple', 'star-yellow'];
-    const sizes = [1, 1.5, 2, 2.5];
+    const sizes = [1, 1.5, 2];
     return {
       id: i,
       top: `${Math.random() * 100}%`,
@@ -93,6 +95,7 @@ export default function Home() {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[128px]" />
         
         <div className="container mx-auto px-6 relative z-10">
+          <FadeIn>
           <div className="text-center mb-16">
             <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">TUTORIAL</div>
             <h2 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
@@ -102,7 +105,9 @@ export default function Home() {
               Step-by-step installation and usage
             </p>
           </div>
+          </FadeIn>
 
+          <FadeIn delay={100}>
           <div className="max-w-5xl mx-auto">
             <div className="relative w-full border border-purple-500/30 rounded-lg overflow-hidden shadow-[0_0_50px_rgba(168,85,247,0.15)]" style={{ paddingBottom: "56.25%" }}>
               <iframe
@@ -113,6 +118,25 @@ export default function Home() {
                 allowFullScreen
               ></iframe>
             </div>
+          </div>
+          </FadeIn>
+
+          {/* Step-by-step guide tabs */}
+          <div className="mt-24">
+            <FadeIn>
+            <div className="text-center mb-16">
+              <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">HOW TO PLAY</div>
+              <h3 className="text-3xl md:text-4xl font-light text-white mb-4 tracking-tight">
+                Step-by-Step Guide
+              </h3>
+              <p className="text-zinc-500 text-sm tracking-wide">
+                Choose the method that applies to your purchase
+              </p>
+            </div>
+            </FadeIn>
+            <FadeIn delay={100}>
+            <TutorialTabs />
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -136,14 +160,17 @@ export default function Home() {
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
+            <FadeIn>
             <div className="inline-block text-xs tracking-[0.3em] text-violet-400 mb-4">FEATURES</div>
             <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight">
               Why Atlas Game Shop?
             </h2>
+            </FadeIn>
           </div>
 
           <div className="max-w-3xl mx-auto space-y-10">
             {/* Row 1 - Left */}
+            <FadeIn direction="left">
             <div className="flex items-center gap-6 group">
               <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
                 <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -157,8 +184,10 @@ export default function Home() {
                 <p className="text-zinc-500 text-sm mt-2">Purchase one game and get another title of equal or lesser value completely free.</p>
               </div>
             </div>
+            </FadeIn>
 
             {/* Row 2 - Right (on mobile: same left-to-right layout) */}
+            <FadeIn direction="right" delay={50}>
             <div className="flex items-center gap-6 md:flex-row-reverse group">
               <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
                 <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -172,8 +201,10 @@ export default function Home() {
                 <p className="text-zinc-500 text-sm mt-2">Fully compatible with handheld devices and other portable gaming hardware with Windows OS.</p>
               </div>
             </div>
+            </FadeIn>
 
             {/* Row 3 - Left */}
+            <FadeIn direction="left" delay={50}>
             <div className="flex items-center gap-6 group">
               <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
                 <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -187,8 +218,10 @@ export default function Home() {
                 <p className="text-zinc-500 text-sm mt-2">Games are activated directly on your own Steam account — no shared accounts, no remote access needed.</p>
               </div>
             </div>
+            </FadeIn>
 
             {/* Row 4 - Right (on mobile: same left-to-right layout) */}
+            <FadeIn direction="right" delay={50}>
             <div className="flex items-center gap-6 md:flex-row-reverse group">
               <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-purple-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.4)] group-hover:shadow-[0_0_35px_rgba(168,85,247,0.7)] transition-all">
                 <svg className="w-7 h-7 md:w-9 md:h-9 text-purple-300" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -202,6 +235,7 @@ export default function Home() {
                 <p className="text-zinc-500 text-sm mt-2">One-time purchase with lifetime access. All future updates and new game additions are included for free.</p>
               </div>
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -209,6 +243,7 @@ export default function Home() {
       {/* Showcase Section */}
       <section id="showcase" className="py-32 border-b border-zinc-800">
         <div className="container mx-auto px-6">
+          <FadeIn>
           <div className="text-center mb-20">
             <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">SHOWCASE</div>
             <h2 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
@@ -218,9 +253,11 @@ export default function Home() {
               Powerful features designed for gamers
             </p>
           </div>
+          </FadeIn>
 
           <div className="max-w-7xl mx-auto space-y-32">
             {/* Library Feature */}
+            <FadeIn direction="up">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
                 <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">GAME LIBRARY</div>
@@ -260,8 +297,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </FadeIn>
 
             {/* Activation Feature */}
+            <FadeIn direction="up">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="relative group perspective-1000">
                 {/* Multi-color glow effect */}
@@ -301,8 +340,10 @@ export default function Home() {
                 </ul>
               </div>
             </div>
+            </FadeIn>
 
             {/* Steam Sharing Feature */}
+            <FadeIn direction="up">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
                 <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">STEAM SHARING</div>
@@ -342,8 +383,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </FadeIn>
 
             {/* Fixes Feature */}
+            <FadeIn direction="up">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="relative group perspective-1000">
                 {/* Multi-color glow effect */}
@@ -383,6 +426,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -393,6 +437,7 @@ export default function Home() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/10 rounded-full blur-[128px]" />
 
         <div className="container mx-auto px-6 relative z-10">
+          <FadeIn>
           <div className="text-center mb-16">
             <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">DOWNLOAD</div>
             <h2 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
@@ -402,9 +447,11 @@ export default function Home() {
               The desktop app for Windows. Free to download and use.
             </p>
           </div>
+          </FadeIn>
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             {/* Left - Download Card */}
+            <FadeIn direction="left">
             <div className="space-y-6">
               {/* Download Button */}
               <div className="border border-purple-500/30 bg-purple-500/5 p-8 rounded-xl relative overflow-hidden group hover:border-purple-400/50 transition-all">
@@ -460,8 +507,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            </FadeIn>
 
             {/* Right - App Screenshot */}
+            <FadeIn direction="right">
             <div className="relative group perspective-1000">
               <div className="absolute -inset-4 bg-purple-500/20 blur-3xl group-hover:bg-purple-500/30 transition-colors" />
               <div className="absolute -inset-4 bg-yellow-500/10 blur-3xl translate-x-8 translate-y-8" />
@@ -475,6 +524,7 @@ export default function Home() {
                 />
               </div>
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -482,6 +532,7 @@ export default function Home() {
       {/* Testimonials Section */}
       <section id="testimonials" className="py-32 border-b border-zinc-800 overflow-hidden">
         <div className="container mx-auto px-6">
+          <FadeIn>
           <div className="text-center mb-20">
             <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">TESTIMONIALS</div>
             <h2 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
@@ -491,9 +542,11 @@ export default function Home() {
               Verified purchases from Indonesian gamers
             </p>
           </div>
+          </FadeIn>
           <ReviewCarousel />
 
           {/* Stats */}
+          <FadeIn delay={100}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto text-center">
             <div>
               <div className="text-4xl md:text-5xl font-light text-purple-400 mb-2" style={{textShadow: "0 0 20px rgba(168,85,247,0.6)"}}>110K+</div>
@@ -516,12 +569,14 @@ export default function Home() {
               <div className="text-xs tracking-[0.2em] text-zinc-500">INSTANT ACTIVATION</div>
             </div>
           </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section id="faq" className="py-32 border-b border-zinc-800">
         <div className="container mx-auto px-6">
+          <FadeIn>
           <div className="text-center mb-20">
             <div className="inline-block text-xs tracking-[0.3em] text-purple-400 mb-4">FAQ</div>
             <h2 className="text-4xl md:text-5xl font-light text-white mb-4 tracking-tight">
@@ -531,24 +586,28 @@ export default function Home() {
               Everything you need to know before getting started
             </p>
           </div>
+          </FadeIn>
 
+          <FadeIn delay={100}>
           <FAQ />
+          </FadeIn>
         </div>
       </section>
 
       {/* CTA Section */}
       <section id="cta" className="py-32 relative overflow-hidden">
         {/* Game Posters Background - 3 rows carousel */}
-        <div className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px] bg-purple-500/40">
+        <div className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px] bg-purple-500/40" style={{contain: "strict"}}>
           {/* Row 1 - scroll left */}
           <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left">
-            {Array.from({ length: 3 }, (_, set) =>
-              Array.from({ length: 22 }, (_, i) => (
+            {Array.from({ length: 2 }, (_, set) =>
+              Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r1-${set}-${i}`}
                   src={`/games/${(i % 65) + 1}.jpg`}
                   alt=""
                   style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="lazy"
                 />
               ))
             )}
@@ -556,13 +615,14 @@ export default function Home() {
 
           {/* Row 2 - scroll right */}
           <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-right">
-            {Array.from({ length: 3 }, (_, set) =>
-              Array.from({ length: 22 }, (_, i) => (
+            {Array.from({ length: 2 }, (_, set) =>
+              Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r2-${set}-${i}`}
                   src={`/games/${((i + 22) % 65) + 1}.jpg`}
                   alt=""
                   style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="lazy"
                 />
               ))
             )}
@@ -570,13 +630,14 @@ export default function Home() {
 
           {/* Row 3 - scroll left slow */}
           <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left-slow">
-            {Array.from({ length: 3 }, (_, set) =>
-              Array.from({ length: 22 }, (_, i) => (
+            {Array.from({ length: 2 }, (_, set) =>
+              Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r3-${set}-${i}`}
                   src={`/games/${((i + 44) % 65) + 1}.jpg`}
                   alt=""
                   style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="lazy"
                 />
               ))
             )}
@@ -584,13 +645,14 @@ export default function Home() {
 
           {/* Row 4 - mobile only, scroll right */}
           <div className="poster-row-mobile flex flex-shrink-0 gap-[2px] animate-scroll-right">
-            {Array.from({ length: 3 }, (_, set) =>
-              Array.from({ length: 22 }, (_, i) => (
+            {Array.from({ length: 2 }, (_, set) =>
+              Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r4-${set}-${i}`}
                   src={`/games/${((i + 10) % 65) + 1}.jpg`}
                   alt=""
                   style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="lazy"
                 />
               ))
             )}
