@@ -3,7 +3,7 @@
 export default function DownloadButton() {
   const handleDownload = () => {
     const a = document.createElement("a");
-    a.href = "https://github.com/atlasjamsuy123/Atlas-Tools-Update/releases/download/v1.1.0/AtlasTools-win-Setup.exe";
+    a.href = "https://github.com/atlasjamsuy123/Atlas-tools-Update/releases/latest/download/AtlasTools-win-Setup.exe";
     a.download = "AtlasTools-win-Setup.exe";
     document.body.appendChild(a);
     a.click();

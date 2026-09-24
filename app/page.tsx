@@ -465,12 +465,12 @@ export default function Home() {
                     </div>
                     <div>
                       <div className="text-white font-light text-lg">Atlas Tools V.1</div>
-                      <div className="text-zinc-500 text-xs tracking-wide">Installer (.exe) — Auto-update included</div>
+                      <div className="text-zinc-500 text-xs tracking-wide">Installer (.exe) with auto-update</div>
                     </div>
                   </div>
 
                   <p className="text-zinc-400 text-sm leading-relaxed mb-3">
-                    Install Atlas Tools sekali, update otomatis setiap ada fitur baru — tidak perlu download ulang. Includes all features — game library, activation system, Steam sharing, and automated fixes.
+                    Install once and stay up to date automatically. Every new feature and improvement is delivered silently in the background. Includes game library, activation system, Steam sharing, and automated fixes.
                   </p>
 
                   <div className="flex items-center gap-2 mb-6 text-xs text-zinc-500 bg-zinc-900/50 border border-zinc-800 rounded-lg px-3 py-2">
