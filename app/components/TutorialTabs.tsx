@@ -240,7 +240,7 @@ export default function TutorialTabs() {
         {current.steps.map((step) => (
           <div
             key={step.number}
-            className="flex gap-5 p-5 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-purple-500/20 hover:bg-purple-500/5 transition-all"
+            className="glass glass-hover flex gap-5 p-5 rounded-2xl"
           >
             {/* Step number */}
             <div className="flex-shrink-0 w-9 h-9 rounded-full border border-purple-500/40 flex items-center justify-center shadow-[0_0_12px_rgba(168,85,247,0.3)]">

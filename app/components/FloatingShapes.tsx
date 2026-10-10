@@ -31,16 +31,15 @@ export default function FloatingShapes() {
           key={i}
           style={{
             position: "absolute",
-            top: (t as any).top,
-            left: (t as any).left,
-            right: (t as any).right,
+            top: (t as { top?: string }).top,
+            left: (t as { left?: string }).left,
+            right: (t as { right?: string }).right,
             width: t.size,
             opacity: t.opacity,
             ["--r" as string]: `${t.rotate}deg`,
             transform: `rotate(${t.rotate}deg)`,
             animation: `floatSpin ${t.duration} ease-in-out infinite`,
             animationDelay: t.delay,
-            willChange: "transform",
           }}
           viewBox="0 0 100 87"
         >

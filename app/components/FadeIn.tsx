@@ -51,8 +51,10 @@ export default function FadeIn({
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "none" : translate,
-        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
-        willChange: "opacity, transform",
+        transition: `opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        // Only hint the compositor while waiting to animate; a permanent will-change kept a GPU
+        // layer alive for every faded block on the page.
+        willChange: visible ? "auto" : "opacity, transform",
       }}
     >
       {children}

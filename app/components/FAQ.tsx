@@ -41,10 +41,8 @@ export default function FAQ() {
       {faqs.map((faq, i) => (
         <div
           key={i}
-          className={`rounded-xl border transition-all duration-300 overflow-hidden ${
-            openIndex === i
-              ? "border-purple-500/50 bg-purple-500/5"
-              : "border-zinc-800 hover:border-zinc-700"
+          className={`glass rounded-2xl transition-all duration-300 overflow-hidden ${
+            openIndex === i ? "!border-purple-400/40 !bg-purple-500/10" : "hover:!border-white/25"
           }`}
         >
           <button
@@ -66,7 +64,7 @@ export default function FAQ() {
           <div className={`transition-all duration-300 ease-in-out ${
             openIndex === i ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
           } overflow-hidden`}>
-            <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed border-t border-zinc-800/50 pt-4">
+            <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed border-t border-white/10 pt-4">
               {faq.a}
             </div>
           </div>

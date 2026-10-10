@@ -49,7 +49,7 @@ export default function RefundPolicy() {
 
           <section>
             <h2 className="text-white text-lg font-light mb-4 text-purple-300">Processing Time</h2>
-            <p>Approved refunds are processed through Tokopedia or Shopee buyer protection. Processing time depends on the respective platform's refund timeline, typically 3–7 business days.</p>
+            <p>Approved refunds are processed through Tokopedia or Shopee buyer protection. Processing time depends on the respective platform&apos;s refund timeline, typically 3–7 business days.</p>
           </section>
 
           <section>

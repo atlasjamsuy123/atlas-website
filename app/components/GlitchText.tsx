@@ -1,86 +1,105 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
-const phrases = [
+const PHRASES = [
   "#1 Gaming Tools & Steam Activation",
   "#1 Gaming Tools & EA Activation",
   "#1 Gaming Tools & Ubisoft Activation",
   "Order now!",
 ];
 
-const glitchChars = "!<>-_\\/[]{}—=+*^?#@$%&";
+const HOLD_MS = 3200; // how long each phrase stays readable
+const NOISE = "▓▒░█▚▞/\\|<>_=+*#";
+const GLOW_WINDOW = 5; // unresolved chars right behind the reveal edge glow violet
 
-// Random color for glitch characters - blue and purple shades
-const glitchColors = [
-  "#a855f7", // purple-500
-  "#7c3aed", // violet-600
-  "#3b82f6", // blue-500
-  "#6366f1", // indigo-500
-  "#60a5fa", // blue-400
-  "#c084fc", // purple-400
-  "#818cf8", // indigo-400
-];
+/** 0 = resolved, 1 = glowing noise at the reveal edge, 2 = faint noise further out */
+type Cell = { ch: string; s: 0 | 1 | 2 };
 
-type CharData = { char: string; color: string | null };
+const resolved = (text: string): Cell[] => text.split("").map((ch) => ({ ch, s: 0 }));
+const noise = () => NOISE[(Math.random() * NOISE.length) | 0];
 
+/**
+ * Hero tagline that "decodes" between phrases: characters resolve left-to-right on an ease-out curve,
+ * with a short glowing scramble at the reveal edge, plus a brief chromatic-aberration glitch burst
+ * (red/cyan sliced ghosts, see .glitch-line in globals.css) as each new phrase lands. Driven by
+ * requestAnimationFrame at ~30 fps; falls back to plain phrase swaps for reduced-motion users.
+ */
 export default function GlitchText() {
-  const [chars, setChars] = useState<CharData[]>(
-    phrases[0].split("").map((c) => ({ char: c, color: null }))
-  );
-  const [isOrderNow, setIsOrderNow] = useState(false);
-  const indexRef = useRef(0);
-
-  const glitchInto = (target: string) => {
-    setIsOrderNow(target === "Order now!");
-    let iteration = 0;
-
-    const interval = setInterval(() => {
-      const newChars: CharData[] = target.split("").map((char, i) => {
-        if (char === " ") return { char: " ", color: null };
-        if (i < iteration) return { char: target[i], color: null };
-        return {
-          char: glitchChars[Math.floor(Math.random() * glitchChars.length)],
-          color: glitchColors[Math.floor(Math.random() * glitchColors.length)],
-        };
-      });
-
-      setChars(newChars);
-      iteration += 0.6;
-
-      if (iteration >= target.length) {
-        setChars(target.split("").map((c) => ({ char: c, color: null })));
-        clearInterval(interval);
-      }
-    }, 30);
-  };
+  const [cells, setCells] = useState<Cell[]>(() => resolved(PHRASES[0]));
+  const [index, setIndex] = useState(0);
+  const [burst, setBurst] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      indexRef.current = (indexRef.current + 1) % phrases.length;
-      glitchInto(phrases[indexRef.current]);
-    }, 3000);
-    return () => clearInterval(timer);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let raf = 0;
+    let holdTimer = 0;
+    let burstTimer = 0;
+    let current = 0;
+
+    const decodeTo = (target: string) => {
+      const start = performance.now();
+      const duration = Math.min(1100, 420 + target.length * 20);
+      let lastPaint = 0;
+
+      setBurst(true);
+      burstTimer = window.setTimeout(() => setBurst(false), 420);
+
+      const step = (now: number) => {
+        const p = Math.min(1, (now - start) / duration);
+        if (now - lastPaint >= 33 || p === 1) {
+          lastPaint = now;
+          const edge = Math.floor((1 - Math.pow(1 - p, 3)) * target.length); // ease-out reveal
+          setCells(
+            target.split("").map((ch, k): Cell => {
+              if (ch === " " || k < edge || p === 1) return { ch, s: 0 };
+              return { ch: noise(), s: k < edge + GLOW_WINDOW ? 1 : 2 };
+            }),
+          );
+        }
+        if (p < 1) raf = requestAnimationFrame(step);
+        else holdTimer = window.setTimeout(next, HOLD_MS);
+      };
+      raf = requestAnimationFrame(step);
+    };
+
+    const next = () => {
+      current = (current + 1) % PHRASES.length;
+      setIndex(current);
+      if (reduce) {
+        setCells(resolved(PHRASES[current]));
+        holdTimer = window.setTimeout(next, HOLD_MS);
+      } else {
+        decodeTo(PHRASES[current]);
+      }
+    };
+
+    holdTimer = window.setTimeout(next, HOLD_MS);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(holdTimer);
+      clearTimeout(burstTimer);
+    };
   }, []);
 
+  const phrase = PHRASES[index];
+  const accent = phrase === "Order now!";
+
   return (
-    <div className="mb-12 flex items-center justify-center" style={{ height: "4rem" }}>
-    <p
-      className={`text-lg md:text-xl max-w-2xl mx-auto font-light tracking-wide text-center px-4 ${
-        isOrderNow ? "text-purple-400" : "text-zinc-300"
-      }`}
-      style={{ fontFamily: "monospace" }}
-    >
-      {chars.map((c, i) =>
-        c.color ? (
-          <span key={i} style={{ color: c.color, textShadow: `0 0 8px ${c.color}` }}>
-            {c.char}
+    <div className="mb-12 flex items-center justify-center" style={{ minHeight: "4rem" }}>
+      <p
+        className={`glitch-line ${burst ? "is-glitching" : ""} ${accent ? "is-accent" : ""}`}
+        data-text={phrase}
+        aria-label={phrase}
+        aria-live="polite"
+      >
+        {cells.map((c, k) => (
+          <span key={k} aria-hidden="true" className={c.s === 0 ? "g-done" : c.s === 1 ? "g-near" : "g-far"}>
+            {c.ch}
           </span>
-        ) : (
-          <span key={i}>{c.char}</span>
-        )
-      )}
-    </p>
+        ))}
+        <span className="g-caret" aria-hidden="true" />
+      </p>
     </div>
   );
 }

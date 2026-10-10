@@ -1,5 +1,7 @@
 "use client";
 
+import PauseOffscreen from "./PauseOffscreen";
+
 import { useState } from "react";
 import Image from "next/image";
 
@@ -39,7 +41,7 @@ export default function ReviewCarousel() {
 
   const ReviewCard = ({ file, index }: { file: string; index: number }) => (
     <div
-      className="relative flex-shrink-0 w-64 h-64 overflow-hidden hover:opacity-90 transition-all group cursor-pointer rounded-lg"
+      className="relative flex-shrink-0 w-64 h-64 overflow-hidden transition-all group cursor-pointer rounded-2xl border border-white/10"
       onClick={() => openLightbox(index)}
     >
       <Image
@@ -62,10 +64,14 @@ export default function ReviewCarousel() {
   return (
     <>
       {/* Scrolling Container */}
-      <div className="relative overflow-hidden">
-        {/* Gradient Overlays */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      {/* Edges fade out via a mask (works over the animated backdrop, unlike black overlays) */}
+      <PauseOffscreen
+        className="relative overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, black 8rem, black calc(100% - 8rem), transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 8rem, black calc(100% - 8rem), transparent)",
+        }}
+      >
 
         {/* Infinite Scroll */}
         <div className="flex gap-4 animate-scroll w-max">
@@ -76,7 +82,7 @@ export default function ReviewCarousel() {
             <ReviewCard key={`second-${i}`} file={file} index={i} />
           ))}
         </div>
-      </div>
+      </PauseOffscreen>
 
       {/* Lightbox */}
       {selectedIndex !== null && (

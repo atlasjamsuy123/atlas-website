@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import LiquidBackdrop from "./components/LiquidBackdrop";
+import SmoothScroll from "./components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Atlas Game Shop",
@@ -21,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="antialiased">
-        {children}
+        <LiquidBackdrop />
+        <SmoothScroll />
+        <div className="relative z-10">{children}</div>
       </body>
     </html>
   );
