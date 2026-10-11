@@ -454,10 +454,10 @@ export default function Home() {
               <div className="absolute -inset-4 bg-yellow-500/10 blur-3xl translate-x-8 translate-y-8" />
               <div className="relative border border-white/15 overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.45)] transform -rotate-y-12 rotate-x-3 group-hover:rotate-y-0 group-hover:rotate-x-0 transition-transform duration-700 ease-out">
                 <Image
-                  src="/images/AtlasTools.webp"
+                  src="/images/AtlasToolsHome.webp"
                   alt="Atlas Tools App"
                   width={800}
-                  height={526}
+                  height={470}
                   className="w-full h-auto"
                 />
               </div>
@@ -535,17 +535,17 @@ export default function Home() {
       {/* CTA Section */}
       <section id="cta" className="cv-auto py-40 relative overflow-hidden">
         {/* Game Posters Background - 3 rows carousel */}
-        <PauseOffscreen className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px] bg-purple-500/40" style={{ contain: "strict" }}>
+        <PauseOffscreen deferUntilNear className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px] bg-purple-500/40" style={{ contain: "strict" }}>
           {/* Row 1 - scroll left */}
           <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left">
             {Array.from({ length: 2 }, (_, set) =>
               Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r1-${set}-${i}`}
-                  src={`/games/${(i % 65) + 1}.jpg`}
+                  src={`/games/${(i % 65) + 1}.webp`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
-                  loading="lazy"
+                  style={{height: "100%", width: "auto", aspectRatio: "460 / 215", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="eager"
                   decoding="async"
                 />
               ))
@@ -558,10 +558,10 @@ export default function Home() {
               Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r2-${set}-${i}`}
-                  src={`/games/${((i + 22) % 65) + 1}.jpg`}
+                  src={`/games/${((i + 22) % 65) + 1}.webp`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
-                  loading="lazy"
+                  style={{height: "100%", width: "auto", aspectRatio: "460 / 215", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="eager"
                   decoding="async"
                 />
               ))
@@ -574,10 +574,10 @@ export default function Home() {
               Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r3-${set}-${i}`}
-                  src={`/games/${((i + 44) % 65) + 1}.jpg`}
+                  src={`/games/${((i + 44) % 65) + 1}.webp`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
-                  loading="lazy"
+                  style={{height: "100%", width: "auto", aspectRatio: "460 / 215", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="eager"
                   decoding="async"
                 />
               ))
@@ -590,10 +590,10 @@ export default function Home() {
               Array.from({ length: 33 }, (_, i) => (
                 <img
                   key={`r4-${set}-${i}`}
-                  src={`/games/${((i + 10) % 65) + 1}.jpg`}
+                  src={`/games/${((i + 10) % 65) + 1}.webp`}
                   alt=""
-                  style={{height: "100%", width: "auto", flexShrink: 0, display: "block", objectFit: "cover"}}
-                  loading="lazy"
+                  style={{height: "100%", width: "auto", aspectRatio: "460 / 215", flexShrink: 0, display: "block", objectFit: "cover"}}
+                  loading="eager"
                   decoding="async"
                 />
               ))

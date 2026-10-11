@@ -48,6 +48,8 @@ export default function ReviewCarousel() {
         src={`/reviews/${file}`}
         alt={`Review ${index + 1}`}
         fill
+        sizes="256px"
+        loading="eager"
         className="object-cover group-hover:scale-105 transition-transform duration-500"
       />
       {/* Hover overlay */}
@@ -66,7 +68,8 @@ export default function ReviewCarousel() {
       {/* Scrolling Container */}
       {/* Edges fade out via a mask (works over the animated backdrop, unlike black overlays) */}
       <PauseOffscreen
-        className="relative overflow-hidden"
+        deferUntilNear
+        className="relative overflow-hidden h-64"
         style={{
           maskImage: "linear-gradient(to right, transparent, black 8rem, black calc(100% - 8rem), transparent)",
           WebkitMaskImage: "linear-gradient(to right, transparent, black 8rem, black calc(100% - 8rem), transparent)",
