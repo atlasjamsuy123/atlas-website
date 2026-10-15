@@ -145,7 +145,7 @@ export default function Home() {
           <FadeIn delay={100}>
           <div className="max-w-5xl mx-auto">
             <div className="glass relative w-full rounded-3xl overflow-hidden" style={{ paddingBottom: "56.25%" }}>
-              <YouTubeFacade id="jDnQ5Z00dpI" title="Atlas Tools Tutorial" />
+              <YouTubeFacade id="69OW5TPMJM0" title="Atlas Tools Tutorial" />
             </div>
           </div>
           </FadeIn>
