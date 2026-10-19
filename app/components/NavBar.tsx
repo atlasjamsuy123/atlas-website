@@ -5,17 +5,18 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+// Every item points at a section that exists on the home page.
 const navItems = [
   { label: "Tutorial", href: "tutorial" },
   { label: "Features", href: "features" },
-  { label: "Showcase", href: "showcase" },
-  { label: "Download", href: "download" },
+  { label: "App", href: "showcase" },
+  { label: "Reviews", href: "testimonials" },
   { label: "FAQ", href: "faq" },
 ];
 
 /**
- * Floating Liquid Glass capsule. Section links smooth-scroll on the home page; from any other page
- * (e.g. /games) they navigate back home to that section. It tightens up slightly once scrolled.
+ * Floating navbar. Section links smooth-scroll on the home page; from any other page (e.g. /games)
+ * they navigate back home to that section. It tightens up slightly once scrolled.
  */
 export default function NavBar() {
   const pathname = usePathname();
@@ -39,14 +40,12 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 flex justify-center px-4 pt-4 pointer-events-none">
+    <nav aria-label="Main" className="fixed top-0 inset-x-0 z-50 flex justify-center px-3 pt-3 pointer-events-none">
       <div
-        className={`glass glass-strong glass-blur pointer-events-auto flex items-center gap-2 md:gap-6 rounded-full transition-all duration-500 ${
-          scrolled ? "px-3 py-2" : "px-4 py-3"
+        className={`glass glass-blur pointer-events-auto flex w-full max-w-5xl items-center gap-1 rounded-full transition-[padding] duration-300 ${
+          scrolled ? "px-2 py-1.5" : "px-3 py-2"
         }`}
-        style={{ transitionTimingFunction: "var(--lg-ease)" }}
       >
-        {/* Logo */}
         <Link
           href="/"
           onClick={(e) => {
@@ -55,38 +54,36 @@ export default function NavBar() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="flex items-center gap-2 pl-1 pr-2"
+          className="flex min-h-11 items-center gap-2.5 rounded-full pl-1 pr-3"
         >
-          <Image src="/images/AtlasGameShopLogo.png" alt="Atlas" width={28} height={28} />
-          <span className="hidden sm:inline text-white text-sm font-light tracking-wider">Atlas Game Shop</span>
+          <Image src="/images/AtlasGameShopLogo.png" alt="Atlas Game Shop" width={32} height={32} />
+          <span className="hidden sm:inline text-sm font-bold text-white" aria-hidden="true">Atlas Game Shop</span>
         </Link>
 
-        {/* Section links */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="ml-auto hidden lg:flex items-center">
           {navItems.map((item) => (
             <button
               key={item.href}
               onClick={() => goTo(item.href)}
-              className="rounded-full px-3 py-1.5 text-[11px] tracking-widest text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="min-h-11 rounded-full px-3.5 text-sm font-medium text-zinc-300 transition-colors hover:text-white"
             >
-              {item.label.toUpperCase()}
+              {item.label}
             </button>
           ))}
         </div>
 
-        {/* Games catalog */}
         <Link
           href="/games"
-          className={`rounded-full px-3 py-1.5 text-[11px] tracking-widest transition-colors ${
-            pathname?.startsWith("/games") ? "bg-white/15 text-white" : "text-zinc-300 hover:text-white hover:bg-white/10"
+          aria-current={pathname?.startsWith("/games") ? "page" : undefined}
+          className={`ml-auto lg:ml-1 flex min-h-11 items-center rounded-full px-3.5 text-sm font-medium transition-colors ${
+            pathname?.startsWith("/games") ? "text-lavender" : "text-zinc-300 hover:text-white"
           }`}
         >
-          GAMES
+          Games
         </Link>
 
-        {/* Order Now CTA */}
-        <button onClick={() => goTo("cta")} className="glass-pill glass-pill-accent !px-4 !py-1.5 !text-[11px] tracking-widest">
-          ORDER NOW
+        <button onClick={() => goTo("order")} className="glass-pill glass-pill-accent !rounded-full !px-4 text-sm">
+          Order now
         </button>
       </div>
     </nav>

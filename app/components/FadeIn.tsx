@@ -9,54 +9,56 @@ type FadeInProps = {
   direction?: "up" | "down" | "left" | "right" | "none";
 };
 
-export default function FadeIn({
-  children,
-  className = "",
-  delay = 0,
-  direction = "up",
-}: FadeInProps) {
+/**
+ * Reveals a block once as it scrolls into view.
+ *
+ * Content is visible in the server HTML: it is only hidden after hydration, and only when it is still
+ * below the fold, so a slow script, a blocked observer, or a crawler never leaves a section blank.
+ * Blocks already on screen at load stay put instead of animating in.
+ */
+export default function FadeIn({ children, className = "", delay = 0, direction = "up" }: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [state, setState] = useState<"static" | "hidden" | "shown">("static");
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (el.getBoundingClientRect().top < window.innerHeight) return; // already visible: no animation
 
+    setState("hidden");
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect(); // trigger once only
+          setState("shown");
+          observer.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
-
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  const translate = {
-    up:    "translateY(28px)",
-    down:  "translateY(-28px)",
-    left:  "translateX(28px)",
-    right: "translateX(-28px)",
-    none:  "none",
+  const offset = {
+    up: "translateY(24px)",
+    down: "translateY(-24px)",
+    left: "translateX(24px)",
+    right: "translateX(-24px)",
+    none: "none",
   }[direction];
 
+  const style: React.CSSProperties =
+    state === "static"
+      ? {}
+      : {
+          opacity: state === "shown" ? 1 : 0,
+          transform: state === "shown" ? "none" : offset,
+          transition: `opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        };
+
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "none" : translate,
-        transition: `opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
-        // Only hint the compositor while waiting to animate; a permanent will-change kept a GPU
-        // layer alive for every faded block on the page.
-        willChange: visible ? "auto" : "opacity, transform",
-      }}
-    >
+    <div ref={ref} className={className} style={style}>
       {children}
     </div>
   );

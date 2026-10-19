@@ -9,8 +9,8 @@ type PageResult = { total: number; totalAll: number; page: number; pages: number
 
 const SORTS = [
   { key: "released", label: "Newest releases" },
-  { key: "az", label: "Name (A–Z)" },
-  { key: "za", label: "Name (Z–A)" },
+  { key: "az", label: "Name (A to Z)" },
+  { key: "za", label: "Name (Z to A)" },
 ] as const;
 
 const PAGE_SIZE = 24;
@@ -123,10 +123,10 @@ export default function GameCatalog() {
       <div className="lg-rise mb-8">
         <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight">Game Library</h1>
         <p className="mt-3 text-zinc-300">
-          <span className="font-semibold text-violet-300">{result ? result.totalAll.toLocaleString("en-US") : "—"} games</span>{" "}
+          <span className="font-semibold text-violet-300">{result ? result.totalAll.toLocaleString("en-US") : "…"} games</span>{" "}
           available
         </p>
-        <p className="mt-1 text-sm text-zinc-500">DLC, soundtracks and unreleased titles are hidden.</p>
+        <p className="mt-1 text-sm text-zinc-400">DLC, soundtracks and unreleased titles are hidden.</p>
       </div>
 
       {/* Search + sort */}
@@ -139,7 +139,7 @@ export default function GameCatalog() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by game name or App ID…"
-            className="w-full bg-transparent py-3 text-white placeholder:text-zinc-500 outline-none"
+            className="w-full bg-transparent py-3 text-white placeholder:text-zinc-400 outline-none"
           />
           {query && (
             <button onClick={() => setQuery("")} className="text-zinc-400 hover:text-white text-sm" aria-label="Clear search">
@@ -193,7 +193,7 @@ export default function GameCatalog() {
           </button>
           {pageWindow(result.page, result.pages).map((p, i) =>
             p === "…" ? (
-              <span key={`gap-${i}`} className="px-2 text-zinc-500">…</span>
+              <span key={`gap-${i}`} className="px-2 text-zinc-400">…</span>
             ) : (
               <button
                 key={p}
@@ -247,7 +247,7 @@ function GameCard({ item, d, i }: { item: Item; d?: GameDetails; i: number }) {
       {/* Body */}
       <div className="flex-1 p-5">
         <h3 className="text-white font-semibold leading-snug line-clamp-2">{item.name}</h3>
-        <p className="mt-1 text-xs text-zinc-500">App ID: {item.appid}</p>
+        <p className="mt-1 text-xs text-zinc-400">App ID: {item.appid}</p>
 
         <div className="mt-3 flex flex-wrap content-start gap-1.5 min-h-[3.25rem]">
           {chips === null

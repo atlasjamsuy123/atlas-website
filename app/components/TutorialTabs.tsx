@@ -46,8 +46,8 @@ const tabs: Tab[] = [
       {
         number: 4,
         title: "Install a mode",
-        description: "Click Install on either Atlas Tools 1.1 or Atlas Tools 1.2. Wait for the installation to complete — Steam will restart automatically.",
-        note: "Atlas Tools 1.2 is recommended if you also need Activation support. Atlas Tools 1.1 works for standard library and sharing use.",
+        description: "Click Install on either Atlas Tools 1.1 or Atlas Tools 1.2. Wait for the installation to complete. Steam restarts automatically.",
+        note: "Atlas Tools 1.2 is recommended if you also need Activation support. Atlas Tools 1.1 works for standard library use.",
       },
       {
         number: 5,
@@ -111,49 +111,9 @@ const tabs: Tab[] = [
     ],
   },
   {
-    id: "sharing",
-    label: "Steam Sharing",
-    description: "How to play games via Steam Family Sharing using an Atlas account.",
-    icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
-      </svg>
-    ),
-    steps: [
-      {
-        number: 1,
-        title: "Open Atlas Tools → Steam Sharing tab",
-        description: "Launch Atlas Tools and click the Steam Sharing menu on the left sidebar. Wait for the game list to load.",
-      },
-      {
-        number: 2,
-        title: "Search for your game and click it",
-        description: "Use the search bar to find the game. Click the game card to open the accounts panel.",
-        note: "You must be logged in to your Atlas account and own the game in your Atlas library to access sharing accounts.",
-      },
-      {
-        number: 3,
-        title: "Choose an account and click \"Login Steam\"",
-        description: "Select any available account from the list and click Login Steam. Steam will close and reopen automatically, logged in to the sharing account.",
-      },
-      {
-        number: 4,
-        title: "Play the game for 3–5 minutes",
-        description: "Once Steam restarts, launch the game from your library. Play for at least 3–5 minutes — this is required for the DRM verification to complete.",
-        note: "Do not close the game too early. The 3–5 minute session is needed for the check to pass successfully.",
-      },
-      {
-        number: 5,
-        title: "Switch back to your own account",
-        description: "After you are done, switch back to your personal Steam account. Go to Steam → top-right avatar menu → Switch Account, then log in with your own credentials.",
-        note: "Always switch back after playing. Leaving Steam on the sharing account may prevent other users from accessing it.",
-      },
-    ],
-  },
-  {
     id: "activation",
     label: "Activation",
-    description: "How to activate a game directly to your own Steam account using a 6-character code.",
+    description: "How to get a game ticket for games that need one, so they launch on your own Steam account.",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
@@ -162,43 +122,36 @@ const tabs: Tab[] = [
     steps: [
       {
         number: 1,
-        title: "Request your activation code from admin",
-        description: (
-          <>
-            Contact the admin via{" "}
-            <a
-              href="https://whatsapp.com/channel/0029VbB5ZWsJ3jus9HtnEi3t"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-purple-400 hover:text-purple-300 underline underline-offset-2"
-            >
-              WhatsApp
-            </a>{" "}
-            to request your 6-character activation code for the game you purchased.
-          </>
-        ),
-        note: "Codes are single-use and expire in ~30 minutes. Request it only when you are ready to activate.",
+        title: "Switch to Atlas Tools 1.2",
+        description: "Open the Mode menu and install or switch to Atlas Tools 1.2. Activations only work in this mode.",
       },
       {
         number: 2,
-        title: "Open Atlas Tools → Activation tab",
-        description: "Launch Atlas Tools and click the Activation menu on the left sidebar.",
+        title: "Install the game in Steam",
+        description: "Add the game to your library (see the Add to Library tab), then let Steam download and install it.",
+        note: "The game has to be fully installed before you get a ticket, or Atlas Tools will stop and ask you to install it first.",
       },
       {
         number: 3,
-        title: "Enter your 6-character code",
-        description: "Type or paste the activation code into the 6 input boxes. The code is case-insensitive.",
+        title: "Open Atlas Tools → Activations tab",
+        description: "Click the Activations menu on the left sidebar, search for your game, and click its card to open the accounts panel.",
       },
       {
         number: 4,
-        title: "Click \"Apply ticket\"",
-        description: "Hit the Apply ticket button. Atlas Tools will verify your code and write the game ticket to your system.",
+        title: "Pick an account and click \"Get Ticket\"",
+        description: "Choose any account in the panel and click Get Ticket. Each account shows how many uses it has left today.",
       },
       {
         number: 5,
-        title: "Game launches automatically",
-        description: "Once the ticket is applied, Steam will launch the game automatically. The game is now added to your library.",
-        note: "Make sure Steam is running before applying the ticket. If the game does not launch, open Steam and find it in your library manually.",
+        title: "Wait while Atlas Tools gets the ticket",
+        description: "Atlas Tools restarts Steam with that account, waits for it to log in, saves the game ticket to your PC, then restarts Steam again. If the game has a fix, it is applied in the same run.",
+        note: "This takes a minute or two. Leave Steam alone until Atlas Tools says the ticket is applied.",
+      },
+      {
+        number: 6,
+        title: "Log in to your own account and play",
+        description: "When Steam reopens, log in to your own Steam account and launch the game from your library.",
+        note: "Each game can be activated once every 30 hours.",
       },
     ],
   },
@@ -209,59 +162,57 @@ export default function TutorialTabs() {
   const current = tabs.find((t) => t.id === activeTab)!;
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       {/* Tab buttons */}
-      <div className="flex flex-wrap gap-2 mb-10 justify-center">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm tracking-wide transition-all border ${
-              activeTab === tab.id
-                ? "bg-purple-600/30 border-purple-500/60 text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.3)]"
-                : "bg-white/5 border-white/10 text-zinc-400 hover:text-white hover:border-white/20"
-            }`}
-          >
-            <span className={activeTab === tab.id ? "text-purple-400" : "text-zinc-500"}>
-              {tab.icon}
-            </span>
-            {tab.label}
-          </button>
-        ))}
+      <div role="tablist" aria-label="Order type" className="flex flex-wrap gap-2 mb-8 justify-center">
+        {tabs.map((tab) => {
+          const selected = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              role="tab"
+              id={`tab-${tab.id}`}
+              aria-selected={selected}
+              aria-controls="tutorial-panel"
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex min-h-11 items-center gap-2 px-4 rounded-xl text-sm font-semibold transition-colors border ${
+                selected
+                  ? "bg-[#7c3aed]/20 border-lavender/50 text-white"
+                  : "bg-white/[0.04] border-white/10 text-zinc-400 hover:text-white hover:border-white/20"
+              }`}
+            >
+              <span className={selected ? "text-lavender" : "text-zinc-400"} aria-hidden="true">
+                {tab.icon}
+              </span>
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Tab description */}
-      <p className="text-center text-zinc-400 text-sm mb-10 tracking-wide">
-        {current.description}
-      </p>
+      <div role="tabpanel" id="tutorial-panel" aria-labelledby={`tab-${current.id}`}>
+        <p className="text-center text-zinc-400 mb-10">{current.description}</p>
 
-      {/* Steps */}
-      <div className="space-y-4">
-        {current.steps.map((step) => (
-          <div
-            key={step.number}
-            className="glass glass-hover flex gap-5 p-5 rounded-2xl"
-          >
-            {/* Step number */}
-            <div className="flex-shrink-0 w-9 h-9 rounded-full border border-purple-500/40 flex items-center justify-center shadow-[0_0_12px_rgba(168,85,247,0.3)]">
-              <span className="text-purple-400 text-sm font-light">{step.number}</span>
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 min-w-0">
-              <h4 className="text-white font-light text-base mb-1">{step.title}</h4>
-              <p className="text-zinc-500 text-sm leading-relaxed">{step.description}</p>
+        {/* Steps: a numbered timeline, because the order matters */}
+        <ol className="relative border-l border-white/10 ml-4 space-y-8">
+          {current.steps.map((step) => (
+            <li key={step.number} className="relative pl-9">
+              <span className="absolute -left-4 top-0 flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-[#14111f] text-sm font-bold text-lavender">
+                {step.number}
+              </span>
+              <h4 className="text-white font-bold leading-8">{step.title}</h4>
+              <p className="mt-1 text-zinc-400 text-sm leading-relaxed">{step.description}</p>
               {step.note && (
-                <div className="mt-3 flex gap-2 p-3 rounded-lg bg-yellow-500/5 border border-yellow-500/20">
-                  <svg className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <div className="mt-3 flex gap-2 rounded-xl border border-yellow-500/25 bg-yellow-500/[0.06] p-3">
+                  <svg className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                   </svg>
-                  <p className="text-yellow-200/70 text-xs leading-relaxed">{step.note}</p>
+                  <p className="text-yellow-100/85 text-sm leading-relaxed">{step.note}</p>
                 </div>
               )}
-            </div>
-          </div>
-        ))}
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );

@@ -1,361 +1,207 @@
 @import "tailwindcss";
 
+/* Direction lives in DESIGN.md: dark violet base, one lavender accent, Plus Jakarta Sans, bold headlines. */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0915;
+  --surface: #14111f;
+  --surface-raised: #1b1729;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --violet: #7c3aed;
+  --violet-hover: #6d28d9;
+  --lavender: #c4b5fd;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0010;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --color-lavender: #c4b5fd;
 }
 
 body {
-  background: #0b0915;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: #e4e4e7;
+  font-family: var(--font-sans);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+::selection { background: rgba(196, 181, 253, 0.35); color: #fff; }
+
+/* Keyboard focus: one lavender ring everywhere (9.9:1 against the darkest surface). */
+:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: #0a0010;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #3b2a63; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--violet); }
 
-::-webkit-scrollbar-thumb {
-  background: #7c3aed;
-  border-radius: 999px;
-}
+html { scroll-behavior: smooth; } /* anchor links glide; wheel glide is SmoothScroll.tsx */
 
-::-webkit-scrollbar-thumb:hover {
-  background: #a855f7;
-}
-
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-272px * 25)); /* 264px width + 8px gap = 272px per item, 25 items */
-  }
-}
-
-.animate-scroll {
-  animation: scroll 60s linear infinite;
-}
-
-.animate-scroll:hover {
-  animation-play-state: paused;
-}
-
-/* 3D Perspective */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.rotate-y-12 {
-  transform: rotateY(12deg) rotateX(6deg);
-}
-
-.-rotate-y-12 {
-  transform: rotateY(-12deg) rotateX(6deg);
-}
-
-.rotate-x-6 {
-  transform: rotateY(12deg) rotateX(6deg);
-}
-
-.-rotate-x-6 {
-  transform: rotateY(12deg) rotateX(-6deg);
-}
-
-.group:hover .group-hover\:rotate-y-0 {
-  transform: rotateY(0deg) rotateX(0deg) !important;
-}
-
-.group:hover .group-hover\:rotate-x-0 {
-  transform: rotateY(0deg) rotateX(0deg) !important;
-}
-
-/* Game Carousel Rows */
-@keyframes scrollLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@keyframes scrollRight {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-
-.animate-scroll-left {
-  animation: scrollLeft 40s linear infinite;
-  will-change: transform;
-  transform: translateZ(0);
-}
-.animate-scroll-right {
-  animation: scrollRight 50s linear infinite;
-  will-change: transform;
-  transform: translateZ(0);
-}
-.animate-scroll-left-slow {
-  animation: scrollLeft 60s linear infinite;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* CTA Poster Row Height */
-.poster-row {
-  height: 180px;
-}
-
-@media (min-width: 768px) {
-  .poster-row {
-    height: 33.33%;
-  }
-}
-
-/* Row 4 - mobile only */
-.poster-row-mobile {
-  height: 180px;
-}
-
-@media (min-width: 768px) {
-  .poster-row-mobile {
-    display: none !important;
-  }
-}
-
-/* Flicker Animation */
-@keyframes flicker {
-  0%   { opacity: 0.70; }
-  4%   { opacity: 0.20; }
-  6%   { opacity: 0.70; }
-  8%   { opacity: 0.15; }
-  10%  { opacity: 0.70; }
-  40%  { opacity: 0.70; }
-  42%  { opacity: 0.10; }
-  44%  { opacity: 0.65; }
-  46%  { opacity: 0.20; }
-  48%  { opacity: 0.70; }
-  70%  { opacity: 0.70; }
-  72%  { opacity: 0.30; }
-  74%  { opacity: 0.70; }
-  100% { opacity: 0.70; }
-}
-
-.animate-flicker {
-  animation: flicker 4s ease-in-out infinite;
-}
-
-/* Floating Shapes */
-@keyframes float1 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-18px) rotate(3deg); }
-  66% { transform: translateY(-8px) rotate(-2deg); }
-}
-
-@keyframes float2 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-22px) rotate(-4deg); }
-  66% { transform: translateY(-10px) rotate(2deg); }
-}
-
-@keyframes float3 {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-.animate-float-1 { animation: float1 7s ease-in-out infinite; }
-.animate-float-2 { animation: float2 9s ease-in-out infinite; }
-.animate-float-3 { animation: float3 11s ease-in-out infinite; }
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-.star {
-  position: absolute;
-  border-radius: 50%;
-  animation: twinkle 3s ease-in-out infinite;
-}
-
-.star-white {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
-}
-
-.star-purple {
-  background: rgba(168, 85, 247, 0.6);
-  box-shadow: 0 0 6px rgba(168, 85, 247, 0.8);
-}
-
-.star-yellow {
-  background: rgba(250, 204, 21, 0.6);
-  box-shadow: 0 0 6px rgba(250, 204, 21, 0.8);
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   Liquid Glass — same visual language as the Atlas Tools desktop app:
-   translucent frosted surfaces with a lit rim, a deep violet backdrop with
-   slowly drifting colour orbs, and springy hover motion.
-   ════════════════════════════════════════════════════════════════════ */
-
-:root {
-  --lg-fill: rgba(255, 255, 255, 0.055);
-  --lg-fill-hover: rgba(255, 255, 255, 0.09);
-  --lg-fill-strong: rgba(255, 255, 255, 0.1);
-  --lg-rim: rgba(255, 255, 255, 0.14);
-  --lg-rim-hover: rgba(255, 255, 255, 0.24);
-  --lg-accent: #a78bfa;
-  --lg-spring: cubic-bezier(0.2, 0.9, 0.25, 1.15);
-  --lg-ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Drifting colour orbs behind everything (rendered by <LiquidBackdrop />) */
+/* ── Backdrop (LiquidBackdrop.tsx) ─────────────────────────────────────
+   One still violet light at the top, the brand color, so the dark page is not flat black.
+   It does not move: the key art and screenshots carry the page, not the background. */
 .lg-backdrop {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
-  contain: strict;
-  background: linear-gradient(135deg, #0e0b1c 0%, #0a0914 55%, #120a1e 100%);
+  background:
+    radial-gradient(ellipse 70% 45% at 50% -8%, rgba(124, 58, 237, 0.22), transparent 70%),
+    var(--bg);
 }
-.lg-orb {
-  position: absolute;
-  border-radius: 9999px;
-  opacity: 0.55;
-  will-change: transform; /* 4 composited layers, moved on the GPU only */
-}
-.lg-orb-violet { width: 46vw; height: 46vw; left: -12vw; top: -14vw; background: radial-gradient(circle, rgba(124,58,237,0.75), rgba(124,58,237,0) 70%); animation: lgDrift1 26s ease-in-out infinite alternate; }
-.lg-orb-blue   { width: 52vw; height: 52vw; right: -16vw; top: 30vh; background: radial-gradient(circle, rgba(37,99,235,0.6), rgba(37,99,235,0) 70%); animation: lgDrift2 32s ease-in-out infinite alternate; }
-.lg-orb-pink   { width: 38vw; height: 38vw; right: 4vw; top: -12vw; background: radial-gradient(circle, rgba(219,39,119,0.5), rgba(219,39,119,0) 70%); animation: lgDrift3 24s ease-in-out infinite alternate; }
-.lg-orb-cyan   { width: 34vw; height: 34vw; left: 8vw; bottom: -10vw; background: radial-gradient(circle, rgba(6,182,212,0.42), rgba(6,182,212,0) 70%); animation: lgDrift4 28s ease-in-out infinite alternate; }
-@keyframes lgDrift1 { to { transform: translate(18vw, 12vh) scale(1.08); } }
-@keyframes lgDrift2 { to { transform: translate(-20vw, -14vh) scale(0.95); } }
-@keyframes lgDrift3 { to { transform: translate(-14vw, 22vh) scale(1.1); } }
-@keyframes lgDrift4 { to { transform: translate(20vw, -16vh) scale(1.05); } }
 
-/* The frosted surface */
-/* Performance: no backdrop-filter here. Blurring the animated backdrop behind every card/pill was
-   recomputed each frame and made the site heavy. The tinted fill + lit rim reads as glass on its own;
-   the real blur is opt-in (.glass-blur) for the few floating surfaces (navbar, search bar). */
+/* ── Surfaces ─────────────────────────────────────────────────────────
+   Class names kept from the old "liquid glass" set because /games uses them too.
+   Surfaces are now solid and flat with a hairline border; elevation is reserved (see DESIGN.md). */
 .glass {
   position: relative;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035));
-  border: 1px solid var(--lg-rim);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),   /* specular top edge */
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-    0 12px 40px rgba(0, 0, 0, 0.35);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
-/* Soft sheen across the upper half */
-.glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 45%);
-}
-.glass-strong {
-  background: linear-gradient(160deg, rgba(38, 36, 51, 0.82), rgba(20, 19, 32, 0.8));
-}
+.glass-strong { background: var(--surface-raised); }
+/* Real blur stays on the floating navbar / catalog search only, so the bar stays legible over content. */
 .glass-blur {
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  background: rgba(20, 17, 31, 0.82);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
+.glass-hover { transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.35s var(--ease); }
+.glass-hover:hover { border-color: var(--line-strong); background-color: var(--surface-raised); }
 
-/* Springy lift on hover */
-.glass-hover {
-  transition: transform 0.45s var(--lg-spring), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.35s ease;
-}
-.glass-hover:hover {
-  transform: translateY(-4px);
-  background-color: var(--lg-fill-hover);
-  border-color: var(--lg-rim-hover);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 18px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(167, 139, 250, 0.12);
-}
-.glass-hover:active { transform: translateY(-1px) scale(0.985); transition-duration: 0.12s; }
-
-/* Pill button */
+/* Buttons: 12px radius per DESIGN.md; the violet fill is the primary action only. */
 .glass-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border-radius: 9999px;
-  padding: 0.6rem 1.25rem;
-  font-size: 0.875rem;
+  min-height: 2.75rem; /* 44px tap target */
+  border-radius: 12px;
+  padding: 0.6rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: #fff;
-  background: var(--lg-fill-strong);
-  border: 1px solid var(--lg-rim);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  transition: transform 0.4s var(--lg-spring), background-color 0.25s ease, border-color 0.25s ease;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line-strong);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
 }
-.glass-pill:hover { transform: scale(1.04); background: rgba(255, 255, 255, 0.16); border-color: var(--lg-rim-hover); }
-.glass-pill:active { transform: scale(0.96); }
-.glass-pill-accent {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.85), rgba(79, 70, 229, 0.8));
-  border-color: rgba(196, 181, 253, 0.5);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 30px rgba(124, 58, 237, 0.35);
-}
-.glass-pill-accent:hover { background: linear-gradient(135deg, rgba(167, 139, 250, 0.95), rgba(99, 102, 241, 0.9)); }
+.glass-pill:hover { background: rgba(255, 255, 255, 0.11); border-color: rgba(255, 255, 255, 0.28); }
+.glass-pill:active { transform: scale(0.98); }
+.glass-pill:disabled { opacity: 0.4; pointer-events: none; }
+.glass-pill-accent { background: var(--violet); border-color: transparent; }
+.glass-pill-accent:hover { background: var(--violet-hover); border-color: transparent; }
 
-/* Small chip (genres / tags) */
 .glass-chip {
   display: inline-flex;
   align-items: center;
   border-radius: 9999px;
   padding: 0.15rem 0.6rem;
-  font-size: 0.7rem;
-  color: #d4d4f5;
+  font-size: 0.72rem;
+  color: #d4d4d8;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--line);
 }
 
-/* Cards appear with a soft rise, staggered by --i */
-@keyframes lgRise {
-  from { opacity: 0; transform: translateY(18px) scale(0.98); }
-  to   { opacity: 1; transform: none; }
-}
-.lg-rise { animation: lgRise 0.6s var(--lg-ease) both; animation-delay: calc(var(--i, 0) * 45ms); }
+/* Catalog cards rise in once as results load (GameCatalog.tsx). */
+@keyframes lgRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.lg-rise { animation: lgRise 0.5s var(--ease) both; animation-delay: calc(var(--i, 0) * 40ms); }
 
-/* Shimmer placeholder while details load */
+/* Loading placeholder while catalog details load. */
 @keyframes lgShimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
 .lg-skeleton {
   border-radius: 9999px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 75%);
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.11) 50%, rgba(255,255,255,0.04) 75%);
   background-size: 200% 100%;
   animation: lgShimmer 1.4s linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .lg-orb, .lg-rise, .lg-skeleton { animation: none !important; }
-  .glass-hover, .glass-pill { transition: none !important; }
+/* ── Home: product screenshots ────────────────────────────────────────
+   The one element per section that gets elevation: it is the proof, so it sits above the page. */
+.shot {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
 }
-.glass-pill:disabled { opacity: 0.35; pointer-events: none; }
 
-html { scroll-behavior: smooth; } /* anchor links glide; wheel glide is SmoothScroll.tsx */
+/* ── Order card + store buttons ── */
+.order-card {
+  background: rgba(20, 17, 31, 0.94);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.85);
+}
+.store-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  transition: filter 0.2s ease, transform 0.2s var(--ease);
+}
+.store-btn:hover { filter: brightness(1.12); }
+.store-btn:active { transform: scale(0.98); }
+.store-tokopedia { background: #15803d; } /* white text 5.0:1 */
+.store-shopee { background: #c2410c; }    /* white text 5.2:1 */
+.store-wa { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-strong); }
+.store-wa:hover { background: rgba(37, 211, 102, 0.16); border-color: rgba(37, 211, 102, 0.45); filter: none; }
 
-/* ── Performance helpers ──────────────────────────────────────────── */
+/* ── Marquees: review strip and the poster wall ───────────────────────
+   They loop because they show how many real reviews / games there are; both pause off screen
+   (PauseOffscreen.tsx), the review strip pauses on hover, and both stop for reduced motion. */
+@keyframes scroll { to { transform: translateX(calc(-272px * 25)); } } /* 256px card + 16px gap, 25 cards */
+.animate-scroll { animation: scroll 70s linear infinite; }
+.animate-scroll:hover,
+.animate-scroll:focus-within { animation-play-state: paused; } /* a keyboard user's focused card stops moving */
+
+@keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.animate-scroll-left { animation: scrollLeft 60s linear infinite; will-change: transform; }
+.animate-scroll-right { animation: scrollRight 70s linear infinite; will-change: transform; }
+.animate-scroll-left-slow { animation: scrollLeft 90s linear infinite; will-change: transform; }
+
+.poster-row { height: 180px; }
+.poster-row-mobile { height: 180px; }
+@media (min-width: 768px) {
+  .poster-row { height: 33.33%; }
+  .poster-row-mobile { display: none !important; }
+}
+
+.is-offscreen,
+.is-offscreen * { animation-play-state: paused !important; }
+
+/* Invisigal flickers only while hovered: she is the "invisible" character, the motion is her trait. */
+@keyframes flicker {
+  0%, 10%, 40%, 48%, 70%, 74%, 100% { opacity: 0.7; }
+  4% { opacity: 0.2; } 8% { opacity: 0.15; } 42% { opacity: 0.1; } 46% { opacity: 0.2; } 72% { opacity: 0.3; }
+}
+.animate-flicker { animation: flicker 4s ease-in-out infinite; }
+
+/* ── Catalog sort dropdown (SortMenu.tsx) ── */
+.sort-menu {
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  transform-origin: top right;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-6px) scale(0.98);
+  transition: opacity 0.18s ease, transform 0.25s var(--ease), visibility 0s linear 0.25s;
+}
+.sort-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity 0.18s ease, transform 0.25s var(--ease), visibility 0s;
+}
 
 /* Skip layout/paint of below-the-fold sections until they're near the viewport. */
 .cv-auto {
@@ -363,165 +209,9 @@ html { scroll-behavior: smooth; } /* anchor links glide; wheel glide is SmoothSc
   contain-intrinsic-size: auto 900px;
 }
 
-/* Infinite marquees pause while off screen (class toggled by <PauseOffscreen />). */
-.is-offscreen,
-.is-offscreen * {
-  animation-play-state: paused !important;
-}
-
-/* ── Hero tagline decode / glitch (GlitchText.tsx) ────────────────── */
-.glitch-line {
-  position: relative;
-  display: inline-block;
-  padding: 0 1rem;
-  font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
-  font-size: clamp(1rem, 2.2vw, 1.3rem);
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  white-space: pre;
-  text-align: center;
-}
-.glitch-line .g-done { color: #e9e7f7; transition: color 0.3s ease; }
-.glitch-line.is-accent .g-done {
-  background: linear-gradient(90deg, #c4b5fd, #a78bfa 45%, #67e8f9);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.glitch-line .g-near { color: #c4b5fd; text-shadow: 0 0 10px rgba(167, 139, 250, 0.85); }
-.glitch-line .g-far { color: rgba(125, 211, 252, 0.28); }
-
-.glitch-line .g-caret {
-  display: inline-block;
-  width: 0.55em;
-  height: 1.05em;
-  margin-left: 0.15em;
-  vertical-align: -0.15em;
-  background: linear-gradient(180deg, #c4b5fd, #8b5cf6);
-  border-radius: 2px;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.7);
-  animation: gCaret 1.05s steps(1) infinite;
-}
-@keyframes gCaret { 50% { opacity: 0; } }
-
-/* Chromatic-aberration burst: red/cyan copies of the phrase, sliced and jittered, for ~0.4s. */
-.glitch-line::before,
-.glitch-line::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  padding: 0 1rem;
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-.glitch-line::before { color: #ff2d75; }
-.glitch-line::after { color: #22d3ee; }
-.glitch-line.is-glitching::before { animation: gSliceA 0.42s steps(2, end) both; }
-.glitch-line.is-glitching::after { animation: gSliceB 0.42s steps(2, end) both; }
-.glitch-line.is-glitching { animation: gJitter 0.42s steps(3, end) both; }
-
-@keyframes gSliceA {
-  0%   { opacity: 0.9; clip-path: inset(10% 0 62% 0); transform: translate(-4px, -1px); }
-  25%  { opacity: 0.9; clip-path: inset(58% 0 12% 0); transform: translate(3px, 1px); }
-  50%  { opacity: 0.8; clip-path: inset(30% 0 45% 0); transform: translate(-2px, 0); }
-  75%  { opacity: 0.6; clip-path: inset(75% 0 5% 0);  transform: translate(4px, -1px); }
-  100% { opacity: 0;   clip-path: inset(50% 0 50% 0); transform: none; }
-}
-@keyframes gSliceB {
-  0%   { opacity: 0.9; clip-path: inset(65% 0 8% 0);  transform: translate(4px, 1px); }
-  25%  { opacity: 0.9; clip-path: inset(8% 0 70% 0);  transform: translate(-3px, 0); }
-  50%  { opacity: 0.8; clip-path: inset(40% 0 35% 0); transform: translate(2px, -1px); }
-  75%  { opacity: 0.6; clip-path: inset(15% 0 60% 0); transform: translate(-4px, 1px); }
-  100% { opacity: 0;   clip-path: inset(50% 0 50% 0); transform: none; }
-}
-@keyframes gJitter {
-  0%, 100% { transform: none; }
-  33% { transform: translate(1px, 0) skewX(-2deg); }
-  66% { transform: translate(-1px, 0) skewX(1deg); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .glitch-line .g-caret, .glitch-line.is-glitching,
-  .glitch-line.is-glitching::before, .glitch-line.is-glitching::after { animation: none !important; }
-}
-
-/* ── Features: glass cards with a per-card tint (--fc = "r, g, b") ── */
-.feature-card {
-  background: linear-gradient(160deg, rgba(32, 29, 48, 0.86), rgba(15, 13, 26, 0.82));
-  overflow: hidden;
-  isolation: isolate;
-}
-.feature-card::after {
-  content: "";
-  position: absolute;
-  inset: auto -30% -60% auto;
-  width: 70%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--fc), 0.28), rgba(var(--fc), 0) 70%);
-  opacity: 0.55;
-  z-index: -1;
-  transition: opacity 0.5s ease, transform 0.6s var(--lg-ease);
-  pointer-events: none;
-}
-.feature-card:hover::after { opacity: 1; transform: translate(-8%, -8%) scale(1.1); }
-.feature-card:hover { border-color: rgba(var(--fc), 0.35); }
-.feature-icon {
-  background: linear-gradient(145deg, rgba(var(--fc), 0.55), rgba(var(--fc), 0.18));
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 24px rgba(var(--fc), 0.35);
-  transition: transform 0.45s var(--lg-spring);
-}
-.feature-card:hover .feature-icon { transform: scale(1.08) rotate(-4deg); }
-
-/* ── CTA ── */
-.cta-card {
-  background: linear-gradient(160deg, rgba(34, 30, 52, 0.96), rgba(16, 14, 28, 0.96));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 30px 80px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(167, 139, 250, 0.12),
-    0 0 90px rgba(124, 58, 237, 0.25);
-}
-.store-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 2.9rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  transition: transform 0.35s var(--lg-spring), filter 0.25s ease, box-shadow 0.3s ease;
-}
-.store-btn:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.12); }
-.store-btn:active { transform: scale(0.97); }
-.store-tokopedia { background: linear-gradient(135deg, rgba(34, 197, 94, 0.85), rgba(21, 128, 61, 0.85)); }
-.store-tokopedia:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 10px 30px rgba(34, 197, 94, 0.35); }
-.store-shopee { background: linear-gradient(135deg, rgba(249, 115, 22, 0.88), rgba(234, 88, 12, 0.85)); }
-.store-shopee:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 10px 30px rgba(249, 115, 22, 0.35); }
-.store-wa { background: rgba(255, 255, 255, 0.07); }
-.store-wa:hover { background: rgba(37, 211, 102, 0.18); border-color: rgba(37, 211, 102, 0.45); }
-
-/* ── Catalog sort dropdown (SortMenu.tsx) ── */
-.sort-menu {
-  background: linear-gradient(160deg, rgba(36, 32, 54, 0.97), rgba(18, 16, 30, 0.97));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 18px 50px rgba(0, 0, 0, 0.55);
-  transform-origin: top right;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(-6px) scale(0.96);
-  transition: opacity 0.18s ease, transform 0.3s var(--lg-spring), visibility 0s linear 0.3s;
-}
-.sort-menu.is-open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: none;
-  transition: opacity 0.18s ease, transform 0.35s var(--lg-spring), visibility 0s;
+  .lg-rise, .lg-skeleton, .animate-scroll, .animate-scroll-left, .animate-scroll-right,
+  .animate-scroll-left-slow, .animate-flicker { animation: none !important; }
+  .glass-hover, .glass-pill, .store-btn { transition: none !important; }
+  html { scroll-behavior: auto; }
 }

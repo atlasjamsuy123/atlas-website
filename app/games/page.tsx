@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import GameCatalog from "./GameCatalog";
 
 export const metadata: Metadata = {
-  title: "Game Library — Atlas Game Shop",
+  title: "Game Library | Atlas Game Shop",
   description: "Browse every game available through Atlas Tools.",
 };
 

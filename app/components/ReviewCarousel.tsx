@@ -2,7 +2,7 @@
 
 import PauseOffscreen from "./PauseOffscreen";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const reviewFiles = [
@@ -35,32 +35,48 @@ const reviewFiles = [
 
 export default function ReviewCarousel() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
-  const openLightbox = (index: number) => setSelectedIndex(index);
-  const closeLightbox = () => setSelectedIndex(null);
+  const openLightbox = (index: number, from: HTMLElement) => {
+    openerRef.current = from;
+    setSelectedIndex(index);
+  };
+  const closeLightbox = () => {
+    setSelectedIndex(null);
+    openerRef.current?.focus(); // back to the card that opened it
+  };
 
-  const ReviewCard = ({ file, index }: { file: string; index: number }) => (
-    <div
-      className="relative flex-shrink-0 w-64 h-64 overflow-hidden transition-all group cursor-pointer rounded-2xl border border-white/10"
-      onClick={() => openLightbox(index)}
+  // Escape closes the lightbox; focus moves into it while open.
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedIndex]);
+
+  const ReviewCard = ({ file, index, copy }: { file: string; index: number; copy: boolean }) => (
+    <button
+      type="button"
+      // The strip holds every review twice so it can loop; only the first copy is reachable by Tab.
+      tabIndex={copy ? -1 : 0}
+      aria-hidden={copy || undefined}
+      aria-label={`Open review ${index + 1}`}
+      className="relative flex-shrink-0 w-64 h-64 overflow-hidden group cursor-pointer rounded-[20px] border border-white/10"
+      onClick={(e) => openLightbox(index, e.currentTarget)}
     >
       <Image
         src={`/reviews/${file}`}
-        alt={`Review ${index + 1}`}
+        alt=""
         fill
         sizes="256px"
         loading="eager"
-        className="object-cover group-hover:scale-105 transition-transform duration-500"
+        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
       />
-      {/* Hover overlay */}
-      <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/10 transition-colors flex items-center justify-center">
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 rounded-full p-3">
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-          </svg>
-        </div>
-      </div>
-    </div>
+    </button>
   );
 
   return (
@@ -79,30 +95,38 @@ export default function ReviewCarousel() {
         {/* Infinite Scroll */}
         <div className="flex gap-4 animate-scroll w-max">
           {reviewFiles.map((file, i) => (
-            <ReviewCard key={`first-${i}`} file={file} index={i} />
+            <ReviewCard key={`first-${i}`} file={file} index={i} copy={false} />
           ))}
           {reviewFiles.map((file, i) => (
-            <ReviewCard key={`second-${i}`} file={file} index={i} />
+            <ReviewCard key={`second-${i}`} file={file} index={i} copy />
           ))}
         </div>
       </PauseOffscreen>
 
-      {/* Lightbox */}
+      {/* Lightbox: click outside, the close button, or Escape closes it */}
       {selectedIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Review ${selectedIndex + 1}`}
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
           onClick={closeLightbox}
         >
-          <div
-            className="relative max-w-3xl w-full mx-8 cursor-default"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative max-w-3xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={closeLightbox}
+              className="glass-pill absolute -top-14 right-0"
+            >
+              Close
+            </button>
             <Image
               src={`/reviews/${reviewFiles[selectedIndex]}`}
-              alt={`Review ${selectedIndex + 1}`}
+              alt={`Customer review ${selectedIndex + 1}`}
               width={1200}
               height={800}
-              className="w-full h-auto max-h-[90vh] object-contain rounded-lg"
+              className="w-full h-auto max-h-[80vh] object-contain rounded-xl"
             />
           </div>
         </div>
