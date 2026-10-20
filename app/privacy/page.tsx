@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
 
           <section>
             <h2 className="text-white text-lg font-bold mb-4">6. Contact</h2>
-            <p>For privacy concerns, contact us via <a href="https://whatsapp.com/channel/0029VbB5ZWsJ3jus9HtnEi3t" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
+            <p>For privacy concerns, contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
           </section>
         </div>
       </div>

@@ -154,6 +154,16 @@ section[id] { scroll-margin-top: 88px; }
 .store-shopee { background: #c2410c; }    /* white text 5.2:1 */
 .store-wa { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line-strong); }
 .store-wa:hover { background: rgba(37, 211, 102, 0.16); border-color: rgba(37, 211, 102, 0.45); filter: none; }
+.store-wa-solid { background: #15803d; } /* WhatsApp green darkened for white text, 5.0:1 */
+
+/* Download dialog (DownloadButton.tsx) */
+.wa-dialog {
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.85);
+}
+.wa-dialog::backdrop { background: rgba(5, 4, 12, 0.72); backdrop-filter: blur(4px); }
+.wa-dialog[open] { animation: lgRise 0.3s var(--ease) both; }
 
 /* ── Marquees: review strip and the poster wall ───────────────────────
    They loop because they show how many real reviews / games there are; both pause off screen
@@ -214,7 +224,7 @@ section[id] { scroll-margin-top: 88px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lg-rise, .lg-skeleton, .animate-scroll, .animate-scroll-left, .animate-scroll-right,
+  .lg-rise, .lg-skeleton, .wa-dialog[open], .animate-scroll, .animate-scroll-left, .animate-scroll-right,
   .animate-scroll-left-slow, .animate-flicker { animation: none !important; }
   .glass-hover, .glass-pill, .store-btn { transition: none !important; }
   html { scroll-behavior: auto; }

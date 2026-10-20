@@ -40,7 +40,7 @@ export default function RefundPolicy() {
             <h2 className="text-white text-lg font-bold mb-4">How to Request a Refund</h2>
             <p>To request a refund:</p>
             <ol className="list-decimal list-inside mt-2 space-y-1 ml-4">
-              <li>Contact us via <a href="https://whatsapp.com/channel/0029VbB5ZWsJ3jus9HtnEi3t" className="text-purple-400 hover:text-purple-300">WhatsApp</a></li>
+              <li>Contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a></li>
               <li>Provide your order number from Tokopedia or Shopee</li>
               <li>Describe the issue you encountered</li>
               <li>Our team will review and respond within 24 hours</li>
@@ -54,7 +54,7 @@ export default function RefundPolicy() {
 
           <section>
             <h2 className="text-white text-lg font-bold mb-4">Contact</h2>
-            <p>For refund requests or questions, contact us via <a href="https://whatsapp.com/channel/0029VbB5ZWsJ3jus9HtnEi3t" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
+            <p>For refund requests or questions, contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
           </section>
         </div>
       </div>

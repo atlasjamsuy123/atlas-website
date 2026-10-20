@@ -10,8 +10,8 @@ import FadeIn from "./components/FadeIn";
 import PauseOffscreen from "./components/PauseOffscreen";
 import YouTubeFacade from "./components/YouTubeFacade";
 import HeroVideo from "./components/HeroVideo";
+import { WHATSAPP } from "./lib/links";
 
-const WHATSAPP = "https://whatsapp.com/channel/0029VbB5ZWsJ3jus9HtnEi3t";
 const TOKOPEDIA = "https://www.tokopedia.com/atlas-game-shop";
 const SHOPEE = "https://shopee.com/atlasgameshop";
 
