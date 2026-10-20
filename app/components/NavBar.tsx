@@ -10,6 +10,7 @@ const navItems = [
   { label: "Tutorial", href: "tutorial" },
   { label: "Features", href: "features" },
   { label: "App", href: "showcase" },
+  { label: "Download", href: "download" },
   { label: "Reviews", href: "testimonials" },
   { label: "FAQ", href: "faq" },
 ];

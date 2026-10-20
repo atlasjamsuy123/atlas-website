@@ -133,6 +133,14 @@ export default function Home() {
                 </Link>
               </div>
 
+              {/* Customers who already ordered come back for the app itself */}
+              <a href="#download" className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-lavender hover:text-white transition-colors">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Already ordered? Download Atlas Tools for Windows
+              </a>
+
               <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-6">
                 {STATS.map((s) => (
                   <div key={s.label}>
@@ -149,7 +157,7 @@ export default function Home() {
         </section>
 
         {/* Features: promo first, three supporting facts as a row */}
-        <section id="features" className="cv-auto relative overflow-hidden py-24 md:py-28">
+        <section id="features" className="relative overflow-hidden py-24 md:py-28">
           <div className="absolute bottom-0 hidden 2xl:flex items-end pointer-events-none z-0" style={{ left: "-80px" }} aria-hidden="true">
             <Image
               src="/characters/JB.png"
@@ -195,11 +203,11 @@ export default function Home() {
         </section>
 
         {/* The app: one row per feature, image side alternating */}
-        <section id="showcase" className="cv-auto py-24 md:py-32 border-t border-white/[0.06]">
+        <section id="showcase" className="py-24 md:py-32 border-t border-white/[0.06]">
           <div className="container mx-auto px-5 md:px-6 max-w-6xl">
             <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white max-w-2xl">
-                What you get inside Atlas Tools
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                What you get inside <span className="whitespace-nowrap">Atlas Tools</span>
               </h2>
             </FadeIn>
 
@@ -227,7 +235,7 @@ export default function Home() {
         </section>
 
         {/* Tutorial: the video first, the written steps under it */}
-        <section id="tutorial" className="cv-auto py-24 md:py-32 border-t border-white/[0.06]">
+        <section id="tutorial" className="py-24 md:py-32 border-t border-white/[0.06]">
           <div className="container mx-auto px-5 md:px-6">
             <FadeIn>
               <div className="max-w-2xl mx-auto text-center">
@@ -251,7 +259,7 @@ export default function Home() {
         </section>
 
         {/* Download: install details beside the app shot */}
-        <section id="download" className="cv-auto py-24 md:py-28 border-t border-white/[0.06]">
+        <section id="download" className="py-24 md:py-28 border-t border-white/[0.06]">
           <div className="container mx-auto px-5 md:px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <FadeIn>
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Download Atlas Tools</h2>
@@ -282,7 +290,7 @@ export default function Home() {
         </section>
 
         {/* Reviews: real order screenshots, full width */}
-        <section id="testimonials" className="cv-auto py-24 md:py-28 border-t border-white/[0.06] overflow-hidden">
+        <section id="testimonials" className="py-24 md:py-28 border-t border-white/[0.06] overflow-hidden">
           <div className="container mx-auto px-5 md:px-6 max-w-6xl">
             <FadeIn>
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Reviews from real orders</h2>
@@ -295,7 +303,7 @@ export default function Home() {
         </section>
 
         {/* FAQ: a narrow reading column */}
-        <section id="faq" className="cv-auto py-24 md:py-28 border-t border-white/[0.06]">
+        <section id="faq" className="py-24 md:py-28 border-t border-white/[0.06]">
           <div className="container mx-auto px-5 md:px-6 max-w-3xl">
             <FadeIn>
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Questions before you order</h2>
@@ -307,7 +315,7 @@ export default function Home() {
         </section>
 
         {/* Order: the poster wall shows the catalog, the card holds the store links */}
-        <section id="order" className="cv-auto relative overflow-hidden py-32 md:py-40">
+        <section id="order" className="relative overflow-hidden py-32 md:py-40">
           <PauseOffscreen deferUntilNear className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px]" style={{ contain: "strict" }}>
             <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left">{posterRow("r1", 0)}</div>
             <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-right">{posterRow("r2", 22)}</div>
@@ -370,6 +378,7 @@ export default function Home() {
             </div>
           </div>
           <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-400">
+            <a href="#download" className="py-2 hover:text-white">Get the app</a>
             <a href={TOKOPEDIA} target="_blank" rel="noopener noreferrer" className="py-2 hover:text-white">Tokopedia</a>
             <a href={SHOPEE} target="_blank" rel="noopener noreferrer" className="py-2 hover:text-white">Shopee</a>
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="py-2 hover:text-white">WhatsApp</a>

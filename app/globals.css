@@ -41,6 +41,9 @@ body {
 
 html { scroll-behavior: smooth; } /* anchor links glide; wheel glide is SmoothScroll.tsx */
 
+/* Anchor targets stop below the floating navbar instead of under it. */
+section[id] { scroll-margin-top: 88px; }
+
 /* ── Backdrop (LiquidBackdrop.tsx) ─────────────────────────────────────
    One still violet light at the top, the brand color, so the dark page is not flat black.
    It does not move: the key art and screenshots carry the page, not the background. */
@@ -203,7 +206,8 @@ html { scroll-behavior: smooth; } /* anchor links glide; wheel glide is SmoothSc
   transition: opacity 0.18s ease, transform 0.25s var(--ease), visibility 0s;
 }
 
-/* Skip layout/paint of below-the-fold sections until they're near the viewport. */
+/* Skip layout/paint of below-the-fold content until it's near the viewport. Not used on the home
+   page's sections: their placeholder height made #download / #faq links land in the wrong place. */
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
