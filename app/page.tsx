@@ -91,20 +91,30 @@ const SHOWCASE = [
   },
 ];
 
+// One row of the tilted poster wall: the same set twice, so the -50% marquee loop is seamless.
 const posterRow = (key: string, offset: number) =>
   Array.from({ length: 2 }, (_, set) =>
-    Array.from({ length: 33 }, (_, i) => (
+    Array.from({ length: 18 }, (_, i) => (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         key={`${key}-${set}-${i}`}
         src={`/games/${((i + offset) % 65) + 1}.webp`}
         alt=""
-        style={{ height: "100%", width: "auto", aspectRatio: "460 / 215", flexShrink: 0, display: "block", objectFit: "cover" }}
+        className="poster-tile"
         loading="eager"
         decoding="async"
       />
     )),
   );
+
+const POSTER_ROWS = [
+  { offset: 0, anim: "animate-scroll-left" },
+  { offset: 11, anim: "animate-scroll-right" },
+  { offset: 22, anim: "animate-scroll-left-slow" },
+  { offset: 33, anim: "animate-scroll-right" },
+  { offset: 44, anim: "animate-scroll-left" },
+  { offset: 55, anim: "animate-scroll-right-slow" },
+];
 
 export default function Home() {
   return (
@@ -316,11 +326,13 @@ export default function Home() {
 
         {/* Order: the poster wall shows the catalog, the card holds the store links */}
         <section id="order" className="relative overflow-hidden py-32 md:py-40">
-          <PauseOffscreen deferUntilNear className="absolute inset-0 z-0 overflow-hidden flex flex-col gap-[2px]" style={{ contain: "strict" }}>
-            <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left">{posterRow("r1", 0)}</div>
-            <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-right">{posterRow("r2", 22)}</div>
-            <div className="poster-row flex flex-shrink-0 gap-[2px] animate-scroll-left-slow">{posterRow("r3", 44)}</div>
-            <div className="poster-row-mobile flex flex-shrink-0 gap-[2px] animate-scroll-right">{posterRow("r4", 10)}</div>
+          <PauseOffscreen deferUntilNear className="absolute inset-0 z-0 overflow-hidden" style={{ contain: "strict" }}>
+            {/* Rows sit on a tilted plane that is larger than the section, so the corners stay covered */}
+            <div className="poster-tilt">
+              {POSTER_ROWS.map((row, i) => (
+                <div key={i} className={`poster-row flex flex-shrink-0 ${row.anim}`}>{posterRow(`r${i}`, row.offset)}</div>
+              ))}
+            </div>
             {/* Readability: dark centre where the card sits, fading into the page above and below */}
             <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 60% 75% at 50% 50%, rgba(11,9,21,0.9), rgba(11,9,21,0.72) 60%, rgba(11,9,21,0.5))" }} />
             <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0b0915] to-transparent" />

@@ -175,15 +175,39 @@ section[id] { scroll-margin-top: 88px; }
 
 @keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.animate-scroll-left { animation: scrollLeft 60s linear infinite; will-change: transform; }
-.animate-scroll-right { animation: scrollRight 70s linear infinite; will-change: transform; }
-.animate-scroll-left-slow { animation: scrollLeft 90s linear infinite; will-change: transform; }
+/* Poster wall drift: a slow ambient pace, roughly 25–35px a second. */
+.animate-scroll-left { animation: scrollLeft 250s linear infinite; will-change: transform; }
+.animate-scroll-right { animation: scrollRight 275s linear infinite; will-change: transform; }
+.animate-scroll-left-slow { animation: scrollLeft 325s linear infinite; will-change: transform; }
+.animate-scroll-right-slow { animation: scrollRight 350s linear infinite; will-change: transform; }
 
-.poster-row { height: 180px; }
-.poster-row-mobile { height: 180px; }
+/* Order section poster wall: rounded tiles on a plane tilted like a store shelf seen at an angle.
+   The plane overshoots the section on every side so the rotation never shows an empty corner. */
+.poster-tilt {
+  position: absolute;
+  inset: -45% -25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  transform: rotate(-12deg);
+}
+.poster-row { height: 120px; width: max-content; } /* max-content: translateX(-50%) is half the tiles, not half the screen */
+.poster-tile {
+  display: block;
+  flex-shrink: 0;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 460 / 215;
+  object-fit: cover;
+  margin-right: 14px; /* margin, not flex gap, so each copied set is exactly half the row and the loop doesn't jump */
+  border-radius: 14px;
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.8);
+}
 @media (min-width: 768px) {
-  .poster-row { height: 33.33%; }
-  .poster-row-mobile { display: none !important; }
+  .poster-tilt { gap: 20px; }
+  .poster-row { height: 190px; }
+  .poster-tile { margin-right: 20px; border-radius: 18px; }
 }
 
 .is-offscreen,
@@ -225,7 +249,7 @@ section[id] { scroll-margin-top: 88px; }
 
 @media (prefers-reduced-motion: reduce) {
   .lg-rise, .lg-skeleton, .wa-dialog[open], .animate-scroll, .animate-scroll-left, .animate-scroll-right,
-  .animate-scroll-left-slow, .animate-flicker { animation: none !important; }
+  .animate-scroll-left-slow, .animate-scroll-right-slow, .animate-flicker { animation: none !important; }
   .glass-hover, .glass-pill, .store-btn { transition: none !important; }
   html { scroll-behavior: auto; }
 }
