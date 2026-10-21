@@ -13,10 +13,12 @@ export default function SortMenu<K extends string>({
   value,
   options,
   onChange,
+  label,
 }: {
   value: K;
   options: readonly Option<K>[];
   onChange: (key: K) => void;
+  label: string;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -92,7 +94,7 @@ export default function SortMenu<K extends string>({
 
       <ul
         role="listbox"
-        aria-label="Sort games"
+        aria-label={label}
         className={`sort-menu glass glass-strong !absolute right-0 top-[calc(100%+0.5rem)] z-30 w-full sm:w-56 rounded-2xl p-1.5 ${
           open ? "is-open" : ""
         }`}

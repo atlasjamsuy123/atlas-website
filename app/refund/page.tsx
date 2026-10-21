@@ -1,63 +1,90 @@
-import Link from "next/link";
+import LegalPage, { WaLink, type LegalContent } from "../components/LegalPage";
+import { getLang } from "../lib/getLang";
 
-export default function RefundPolicy() {
-  return (
-    <div className="min-h-screen text-white" style={{background: "linear-gradient(135deg, #0a0010 0%, #0d0018 40%, #0a000f 70%, #060008 100%)"}}>
-      <div className="container mx-auto px-6 py-20 max-w-3xl">
-        <Link href="/" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">← Back to Home</Link>
+const CONTENT: Record<"en" | "id", LegalContent> = {
+  en: {
+    title: "Refund Policy",
+    updated: "Last updated: September 2026",
+    back: "Back to Home",
+    sections: [
+      { heading: "Our Refund Guarantee", body: "At Atlas Game Shop, we stand behind the quality of our service. If Atlas Tools does not work as described after following our support guide, we will issue a full refund." },
+      {
+        heading: "Eligible Refund Conditions",
+        body: "You are eligible for a full refund if:",
+        list: [
+          "Atlas Tools fails to activate your games after following the official tutorial",
+          "The software does not function on your compatible Windows device",
+          "You have contacted our support and the issue could not be resolved",
+        ],
+      },
+      {
+        heading: "Non-Eligible Conditions",
+        body: "Refunds will not be issued if:",
+        list: [
+          "You have not followed the setup tutorial",
+          "The issue is caused by your hardware or operating system incompatibility",
+          "You simply changed your mind after a successful activation",
+          "Your device does not meet the minimum system requirements",
+        ],
+      },
+      {
+        heading: "How to Request a Refund",
+        body: "To request a refund:",
+        ordered: true,
+        list: [
+          <>Contact us via <WaLink /></>,
+          "Provide your order number from Tokopedia or Shopee",
+          "Describe the issue you encountered",
+          "Our team will review and respond within 24 hours",
+        ],
+      },
+      { heading: "Processing Time", body: "Approved refunds are processed through Tokopedia or Shopee buyer protection. Processing time depends on the respective platform's refund timeline, typically 3 to 7 business days." },
+      { heading: "Contact", body: <>For refund requests or questions, contact us via <WaLink />.</> },
+    ],
+  },
+  id: {
+    title: "Kebijakan Refund",
+    updated: "Terakhir diperbarui: September 2026",
+    back: "Kembali ke Beranda",
+    sections: [
+      { heading: "Jaminan Refund Kami", body: "Di Atlas Game Shop, kami menjamin kualitas layanan kami. Kalau Atlas Tools tidak berfungsi seperti yang dijelaskan setelah kamu mengikuti panduan support kami, uang kamu kami kembalikan penuh." },
+      {
+        heading: "Syarat Refund",
+        body: "Kamu berhak mendapat refund penuh jika:",
+        list: [
+          "Atlas Tools gagal mengaktifkan game kamu setelah mengikuti tutorial resmi",
+          "Software tidak berfungsi di perangkat Windows kamu yang kompatibel",
+          "Kamu sudah menghubungi support kami dan masalahnya tidak bisa diselesaikan",
+        ],
+      },
+      {
+        heading: "Kondisi yang Tidak Bisa Refund",
+        body: "Refund tidak diberikan jika:",
+        list: [
+          "Kamu tidak mengikuti tutorial pemasangan",
+          "Masalah disebabkan oleh hardware atau sistem operasi kamu yang tidak kompatibel",
+          "Kamu berubah pikiran setelah aktivasi berhasil",
+          "Perangkat kamu tidak memenuhi spesifikasi minimum",
+        ],
+      },
+      {
+        heading: "Cara Mengajukan Refund",
+        body: "Untuk mengajukan refund:",
+        ordered: true,
+        list: [
+          <>Hubungi kami lewat <WaLink /></>,
+          "Kirim nomor order kamu dari Tokopedia atau Shopee",
+          "Jelaskan masalah yang kamu alami",
+          "Tim kami akan meninjau dan membalas dalam 24 jam",
+        ],
+      },
+      { heading: "Waktu Proses", body: "Refund yang disetujui diproses lewat perlindungan pembeli Tokopedia atau Shopee. Lama prosesnya tergantung platform masing-masing, biasanya 3 sampai 7 hari kerja." },
+      { heading: "Kontak", body: <>Untuk pengajuan refund atau pertanyaan, hubungi kami lewat <WaLink />.</> },
+    ],
+  },
+};
 
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-2">Refund Policy</h1>
-        <p className="text-zinc-400 text-sm mb-12">Last updated: September 2026</p>
-
-        <div className="space-y-10 text-zinc-400 text-sm leading-relaxed">
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">Our Refund Guarantee</h2>
-            <p>At Atlas Game Shop, we stand behind the quality of our service. If Atlas Tools does not work as described after following our support guide, we will issue a full refund.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">Eligible Refund Conditions</h2>
-            <p>You are eligible for a full refund if:</p>
-            <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
-              <li>Atlas Tools fails to activate your games after following the official tutorial</li>
-              <li>The software does not function on your compatible Windows device</li>
-              <li>You have contacted our support and the issue could not be resolved</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">Non-Eligible Conditions</h2>
-            <p>Refunds will not be issued if:</p>
-            <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
-              <li>You have not followed the setup tutorial</li>
-              <li>The issue is caused by your hardware or operating system incompatibility</li>
-              <li>You simply changed your mind after a successful activation</li>
-              <li>Your device does not meet the minimum system requirements</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">How to Request a Refund</h2>
-            <p>To request a refund:</p>
-            <ol className="list-decimal list-inside mt-2 space-y-1 ml-4">
-              <li>Contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a></li>
-              <li>Provide your order number from Tokopedia or Shopee</li>
-              <li>Describe the issue you encountered</li>
-              <li>Our team will review and respond within 24 hours</li>
-            </ol>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">Processing Time</h2>
-            <p>Approved refunds are processed through Tokopedia or Shopee buyer protection. Processing time depends on the respective platform&apos;s refund timeline, typically 3 to 7 business days.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">Contact</h2>
-            <p>For refund requests or questions, contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
+export default async function RefundPolicy() {
+  const { lang } = await getLang();
+  return <LegalPage content={CONTENT[lang]} />;
 }

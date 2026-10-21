@@ -1,51 +1,44 @@
-import Link from "next/link";
+import LegalPage, { WaLink, type LegalContent } from "../components/LegalPage";
+import { getLang } from "../lib/getLang";
 
-export default function PrivacyPolicy() {
-  return (
-    <div className="min-h-screen text-white" style={{background: "linear-gradient(135deg, #0a0010 0%, #0d0018 40%, #0a000f 70%, #060008 100%)"}}>
-      <div className="container mx-auto px-6 py-20 max-w-3xl">
-        <Link href="/" className="text-purple-400 hover:text-purple-300 text-sm mb-8 inline-block">← Back to Home</Link>
+const CONTENT: Record<"en" | "id", LegalContent> = {
+  en: {
+    title: "Privacy Policy",
+    updated: "Last updated: September 2026",
+    back: "Back to Home",
+    sections: [
+      { heading: "1. Information We Collect", body: "When you purchase through Tokopedia or Shopee, those platforms handle your personal information according to their own privacy policies. Atlas Game Shop only receives your order information necessary to fulfill your purchase." },
+      {
+        heading: "2. How We Use Your Information",
+        body: "We use your information solely to:",
+        list: ["Process and fulfill your order", "Provide customer support", "Send important service updates"],
+      },
+      { heading: "3. Data Storage", body: "We do not store your payment information. All payment processing is handled by Tokopedia and Shopee. We only retain the minimum information required to support your account." },
+      { heading: "4. Data Sharing", body: "We do not sell, trade, or transfer your personal information to third parties. Your data is only used to provide and improve our service." },
+      { heading: "5. Atlas Tools Application", body: "The Atlas Tools desktop application requires an internet connection to verify your license. The app only communicates with our servers to authenticate your activation code. No personal browsing or gaming data is collected." },
+      { heading: "6. Contact", body: <>For privacy concerns, contact us via <WaLink />.</> },
+    ],
+  },
+  id: {
+    title: "Kebijakan Privasi",
+    updated: "Terakhir diperbarui: September 2026",
+    back: "Kembali ke Beranda",
+    sections: [
+      { heading: "1. Informasi yang Kami Kumpulkan", body: "Saat kamu membeli lewat Tokopedia atau Shopee, platform tersebut mengelola data pribadi kamu sesuai kebijakan privasi mereka masing-masing. Atlas Game Shop hanya menerima informasi order yang diperlukan untuk memproses pembelian kamu." },
+      {
+        heading: "2. Cara Kami Menggunakan Informasi Kamu",
+        body: "Kami menggunakan informasi kamu hanya untuk:",
+        list: ["Memproses dan menyelesaikan order kamu", "Memberikan bantuan pelanggan", "Mengirim informasi penting tentang layanan"],
+      },
+      { heading: "3. Penyimpanan Data", body: "Kami tidak menyimpan informasi pembayaran kamu. Semua pembayaran diproses oleh Tokopedia dan Shopee. Kami hanya menyimpan informasi seminimal mungkin yang diperlukan untuk mendukung akun kamu." },
+      { heading: "4. Berbagi Data", body: "Kami tidak menjual, menukar, atau memindahkan data pribadi kamu ke pihak ketiga. Data kamu hanya digunakan untuk menyediakan dan meningkatkan layanan kami." },
+      { heading: "5. Aplikasi Atlas Tools", body: "Aplikasi desktop Atlas Tools membutuhkan koneksi internet untuk memverifikasi lisensi kamu. Aplikasi hanya berkomunikasi dengan server kami untuk mengautentikasi kode aktivasi kamu. Tidak ada data browsing atau data game pribadi yang dikumpulkan." },
+      { heading: "6. Kontak", body: <>Untuk pertanyaan soal privasi, hubungi kami lewat <WaLink />.</> },
+    ],
+  },
+};
 
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-2">Privacy Policy</h1>
-        <p className="text-zinc-400 text-sm mb-12">Last updated: September 2026</p>
-
-        <div className="space-y-10 text-zinc-400 text-sm leading-relaxed">
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">1. Information We Collect</h2>
-            <p>When you purchase through Tokopedia or Shopee, those platforms handle your personal information according to their own privacy policies. Atlas Game Shop only receives your order information necessary to fulfill your purchase.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">2. How We Use Your Information</h2>
-            <p>We use your information solely to:</p>
-            <ul className="list-disc list-inside mt-2 space-y-1 ml-4">
-              <li>Process and fulfill your order</li>
-              <li>Provide customer support</li>
-              <li>Send important service updates</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">3. Data Storage</h2>
-            <p>We do not store your payment information. All payment processing is handled by Tokopedia and Shopee. We only retain the minimum information required to support your account.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">4. Data Sharing</h2>
-            <p>We do not sell, trade, or transfer your personal information to third parties. Your data is only used to provide and improve our service.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">5. Atlas Tools Application</h2>
-            <p>The Atlas Tools desktop application requires an internet connection to verify your license. The app only communicates with our servers to authenticate your activation code. No personal browsing or gaming data is collected.</p>
-          </section>
-
-          <section>
-            <h2 className="text-white text-lg font-bold mb-4">6. Contact</h2>
-            <p>For privacy concerns, contact us via <a href="https://wa.me/6285138796069" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300">WhatsApp</a>.</p>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
+export default async function PrivacyPolicy() {
+  const { lang } = await getLang();
+  return <LegalPage content={CONTENT[lang]} />;
 }

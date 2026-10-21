@@ -4,6 +4,12 @@ import PauseOffscreen from "./PauseOffscreen";
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useLang } from "./LanguageProvider";
+
+const COPY = {
+  en: { open: "Open review", review: "Review", customer: "Customer review", close: "Close" },
+  id: { open: "Buka ulasan", review: "Ulasan", customer: "Ulasan pelanggan", close: "Tutup" },
+};
 
 const reviewFiles = [
   "Screenshot 2026-09-16 132603.png",
@@ -37,6 +43,7 @@ export default function ReviewCarousel() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
+  const t = COPY[useLang().lang];
 
   const openLightbox = (index: number, from: HTMLElement) => {
     openerRef.current = from;
@@ -64,7 +71,7 @@ export default function ReviewCarousel() {
       // The strip holds every review twice so it can loop; only the first copy is reachable by Tab.
       tabIndex={copy ? -1 : 0}
       aria-hidden={copy || undefined}
-      aria-label={`Open review ${index + 1}`}
+      aria-label={`${t.open} ${index + 1}`}
       className="relative flex-shrink-0 w-64 h-64 overflow-hidden group cursor-pointer rounded-[20px] border border-white/10"
       onClick={(e) => openLightbox(index, e.currentTarget)}
     >
@@ -108,7 +115,7 @@ export default function ReviewCarousel() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`Review ${selectedIndex + 1}`}
+          aria-label={`${t.review} ${selectedIndex + 1}`}
           className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
           onClick={closeLightbox}
         >
@@ -119,11 +126,11 @@ export default function ReviewCarousel() {
               onClick={closeLightbox}
               className="glass-pill absolute -top-14 right-0"
             >
-              Close
+              {t.close}
             </button>
             <Image
               src={`/reviews/${reviewFiles[selectedIndex]}`}
-              alt={`Customer review ${selectedIndex + 1}`}
+              alt={`${t.customer} ${selectedIndex + 1}`}
               width={1200}
               height={800}
               className="w-full h-auto max-h-[80vh] object-contain rounded-xl"

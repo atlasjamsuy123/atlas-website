@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { whatsappWith } from "../lib/links";
+import { useLang } from "./LanguageProvider";
 
 // The dialog can't be dismissed for this many seconds, so the WhatsApp offer gets read.
 const LOCK_SECONDS = 5;
@@ -9,7 +10,24 @@ const LOCK_SECONDS = 5;
 const SETUP_URL =
   "https://github.com/atlasjamsuy123/Atlas-tools-Update/releases/latest/download/AtlasTools-win-Setup.exe";
 
-const WA_MESSAGE = "Halo Atlas, saya baru download Atlas Tools. Boleh dibantu?";
+const COPY = {
+  en: {
+    button: "Download Atlas Tools",
+    title: "Your download has started",
+    body: "Chat with Atlas on WhatsApp to get your Atlas Tools code, or for help installing and activating your games.",
+    chat: "Chat Atlas on WhatsApp",
+    later: "Maybe later",
+    waMessage: "Hi Atlas, I just downloaded Atlas Tools. Can you help me?",
+  },
+  id: {
+    button: "Download Atlas Tools",
+    title: "Download kamu sudah dimulai",
+    body: "Chat Atlas di WhatsApp untuk dapat kode Atlas Tools, atau minta bantuan instal dan aktivasi game kamu.",
+    chat: "Chat Atlas di WhatsApp",
+    later: "Nanti saja",
+    waMessage: "Halo Atlas, saya baru download Atlas Tools. Boleh dibantu?",
+  },
+};
 
 /**
  * The installer download. The click still downloads normally; it also opens a dialog that points
@@ -18,8 +36,10 @@ const WA_MESSAGE = "Halo Atlas, saya baru download Atlas Tools. Boleh dibantu?";
  */
 export default function DownloadButton() {
   const dialog = useRef<HTMLDialogElement>(null);
+  const t = COPY[useLang().lang];
   const [secondsLeft, setSecondsLeft] = useState(0);
   const locked = secondsLeft > 0;
+  const leavingForChat = useRef(false); // the WhatsApp button may close it while still locked
 
   useEffect(() => {
     if (!locked) return;
@@ -28,6 +48,7 @@ export default function DownloadButton() {
   }, [locked, secondsLeft]);
 
   const open = () => {
+    leavingForChat.current = false;
     setSecondsLeft(LOCK_SECONDS);
     dialog.current?.showModal();
   };
@@ -46,7 +67,7 @@ export default function DownloadButton() {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
-        Download Atlas Tools
+        {t.button}
       </a>
 
       <dialog
@@ -55,7 +76,7 @@ export default function DownloadButton() {
         onClick={(e) => { if (e.target === e.currentTarget) dismiss(); }}
         onCancel={(e) => { if (locked) e.preventDefault(); }} // Esc does nothing until the timer ends
         // Chrome lets a repeated Esc close the dialog anyway; put it back while still locked.
-        onClose={() => { if (locked) dialog.current?.showModal(); }}
+        onClose={() => { if (locked && !leavingForChat.current) dialog.current?.showModal(); }}
         className="wa-dialog m-auto w-[calc(100%-2rem)] max-w-md rounded-[20px] p-0 text-zinc-300"
       >
         <div className="p-7">
@@ -65,24 +86,26 @@ export default function DownloadButton() {
             </svg>
           </span>
           <h2 id="dl-dialog-title" className="mt-5 text-2xl font-extrabold tracking-tight text-white">
-            Your download has started
+            {t.title}
           </h2>
-          <p className="mt-2">
-            Chat with Atlas on WhatsApp to get your Atlas Tools code, or for help installing and activating your games.
-          </p>
+          <p className="mt-2">{t.body}</p>
 
           <div className="mt-7 flex flex-col gap-3">
             <a
-              href={whatsappWith(WA_MESSAGE)}
+              href={whatsappWith(t.waMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => dialog.current?.close()}
+              onClick={() => {
+                leavingForChat.current = true;
+                setSecondsLeft(0);
+                dialog.current?.close();
+              }}
               className="store-btn store-wa-solid"
             >
-              Chat Atlas on WhatsApp
+              {t.chat}
             </a>
             <button type="button" onClick={dismiss} disabled={locked} className="glass-pill">
-              {locked ? `Maybe later (${secondsLeft})` : "Maybe later"}
+              {locked ? `${t.later} (${secondsLeft})` : t.later}
             </button>
           </div>
         </div>

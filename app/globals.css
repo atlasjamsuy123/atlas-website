@@ -156,6 +156,53 @@ section[id] { scroll-margin-top: 88px; }
 .store-wa:hover { background: rgba(37, 211, 102, 0.16); border-color: rgba(37, 211, 102, 0.45); filter: none; }
 .store-wa-solid { background: #15803d; } /* WhatsApp green darkened for white text, 5.0:1 */
 
+/* Language: navbar EN/ID switch and the first-visit prompt (LanguageProvider.tsx) */
+.lang-switch {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+.lang-switch button {
+  min-width: 2.5rem;
+  min-height: 2.25rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #a1a1aa;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.lang-switch button:hover { color: #fff; }
+.lang-switch button.is-active { background: rgba(196, 181, 253, 0.16); color: #fff; }
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.lang-option:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.28); }
+.lang-option.is-suggested { border-color: rgba(196, 181, 253, 0.55); background: rgba(124, 58, 237, 0.14); }
+.lang-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: rgba(196, 181, 253, 0.14);
+  color: var(--lavender);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
 /* Download dialog (DownloadButton.tsx) */
 .wa-dialog {
   background: var(--surface-raised);

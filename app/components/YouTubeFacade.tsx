@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLang } from "./LanguageProvider";
 
 /**
  * Lightweight stand-in for a YouTube embed: just the video thumbnail and a play button until clicked.
@@ -9,6 +10,7 @@ import { useState } from "react";
  */
 export default function YouTubeFacade({ id, title }: { id: string; title: string }) {
   const [playing, setPlaying] = useState(false);
+  const playLabel = useLang().lang === "id" ? "Putar video" : "Play video";
 
   if (playing) {
     return (
@@ -27,7 +29,7 @@ export default function YouTubeFacade({ id, title }: { id: string; title: string
       type="button"
       onClick={() => setPlaying(true)}
       className="group absolute inset-0 h-full w-full cursor-pointer"
-      aria-label={`Play video: ${title}`}
+      aria-label={`${playLabel}: ${title}`}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img

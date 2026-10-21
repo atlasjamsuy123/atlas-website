@@ -2,31 +2,83 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { GameDetails } from "../lib/catalog";
+import { numberLocale, type Lang } from "../lib/i18n";
+import { useLang } from "../components/LanguageProvider";
 import SortMenu from "./SortMenu";
 
 type Item = { appid: number; name: string; lm: number; released: string };
 type PageResult = { total: number; totalAll: number; page: number; pages: number; pageSize: number; items: Item[] };
+type SortKey = "released" | "az" | "za";
 
-const SORTS = [
-  { key: "released", label: "Newest releases" },
-  { key: "az", label: "Name (A to Z)" },
-  { key: "za", label: "Name (Z to A)" },
-] as const;
+const COPY = {
+  en: {
+    sorts: [
+      { key: "released", label: "Newest releases" },
+      { key: "az", label: "Name (A to Z)" },
+      { key: "za", label: "Name (Z to A)" },
+    ] as { key: SortKey; label: string }[],
+    sortLabel: "Sort games",
+    title: "Game Library",
+    games: "games",
+    available: "available",
+    hidden: "DLC, soundtracks and unreleased titles are hidden.",
+    search: "Search by game name or App ID…",
+    clear: "Clear search",
+    results: (n: string, one: boolean, q: string) => `${n} result${one ? "" : "s"} for “${q}”`,
+    loadFailed: "Failed to load games.",
+    retry: "Try again",
+    none: "No games match your search.",
+    prev: "Previous page",
+    next: "Next page",
+    free: "Free",
+    released: "Released",
+    updated: "Updated",
+  },
+  id: {
+    sorts: [
+      { key: "released", label: "Rilis terbaru" },
+      { key: "az", label: "Nama (A ke Z)" },
+      { key: "za", label: "Nama (Z ke A)" },
+    ] as { key: SortKey; label: string }[],
+    sortLabel: "Urutkan game",
+    title: "Library Game",
+    games: "game",
+    available: "tersedia",
+    hidden: "DLC, soundtrack dan game yang belum rilis disembunyikan.",
+    search: "Cari pakai nama game atau App ID…",
+    clear: "Hapus pencarian",
+    results: (n: string, _one: boolean, q: string) => `${n} hasil untuk “${q}”`,
+    loadFailed: "Gagal memuat game.",
+    retry: "Coba lagi",
+    none: "Tidak ada game yang cocok dengan pencarian kamu.",
+    prev: "Halaman sebelumnya",
+    next: "Halaman berikutnya",
+    free: "Gratis",
+    released: "Rilis",
+    updated: "Diperbarui",
+  },
+};
 
 const PAGE_SIZE = 24;
 
 /** Legacy header path; newer apps only have a hashed one, which the details call supplies. */
 const cdnHeader = (appid: number) => `https://cdn.akamai.steamstatic.com/steam/apps/${appid}/header.jpg`;
 
-function updatedLabel(lm: number) {
+function updatedLabel(lm: number, lang: Lang) {
   if (!lm) return "";
   const days = Math.floor((Date.now() / 1000 - lm) / 86400);
-  if (days <= 0) return "Today";
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+  if (lang === "id") {
+    if (days <= 0) return "hari ini";
+    if (days < 30) return `${days} hari lalu`;
+    if (months < 12) return `${months} bulan lalu`;
+    return `${years} tahun lalu`;
+  }
+  if (days <= 0) return "today";
   if (days === 1) return "1 day ago";
   if (days < 30) return `${days} days ago`;
-  const months = Math.floor(days / 30);
   if (months < 12) return months === 1 ? "1 month ago" : `${months} months ago`;
-  const years = Math.floor(days / 365);
   return years === 1 ? "1 year ago" : `${years} years ago`;
 }
 
@@ -45,7 +97,10 @@ function pageWindow(current: number, total: number): (number | "…")[] {
 export default function GameCatalog() {
   const [query, setQuery] = useState("");
   const [debounced, setDebounced] = useState("");
-  const [sort, setSort] = useState<(typeof SORTS)[number]["key"]>("released");
+  const { lang } = useLang();
+  const t = COPY[lang];
+  const fmt = (n: number) => n.toLocaleString(numberLocale(lang));
+  const [sort, setSort] = useState<SortKey>("released");
   const [page, setPage] = useState(1);
   const [details, setDetails] = useState<Record<number, GameDetails>>({});
   const [retry, setRetry] = useState(0);
@@ -74,7 +129,7 @@ export default function GameCatalog() {
     const qs = new URLSearchParams({ q: debounced, sort, page: String(page), size: String(PAGE_SIZE) });
     fetch(`/api/games?${qs}`, { signal: ctrl.signal })
       .then(async (r) => {
-        if (!r.ok) throw new Error((await r.json().catch(() => null))?.error ?? "Failed to load games.");
+        if (!r.ok) throw new Error((await r.json().catch(() => null))?.error ?? COPY[lang].loadFailed);
         return r.json() as Promise<PageResult>;
       })
       .then((data) => setLoaded({ key: requestKey, data }))
@@ -83,6 +138,7 @@ export default function GameCatalog() {
         setLoaded((prev) => ({ key: requestKey, data: prev?.data, error: e.message }));
       });
     return () => ctrl.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounced, sort, page, requestKey]);
 
   // Store details for the cards on screen (genres, real header art, release state).
@@ -121,12 +177,12 @@ export default function GameCatalog() {
     <div ref={topRef} className="scroll-mt-28">
       {/* Header */}
       <div className="lg-rise mb-8">
-        <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight">Game Library</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight">{t.title}</h1>
         <p className="mt-3 text-zinc-300">
-          <span className="font-semibold text-violet-300">{result ? result.totalAll.toLocaleString("en-US") : "…"} games</span>{" "}
-          available
+          <span className="font-semibold text-violet-300">{result ? fmt(result.totalAll) : "…"} {t.games}</span>{" "}
+          {t.available}
         </p>
-        <p className="mt-1 text-sm text-zinc-400">DLC, soundtracks and unreleased titles are hidden.</p>
+        <p className="mt-1 text-sm text-zinc-400">{t.hidden}</p>
       </div>
 
       {/* Search + sort */}
@@ -138,18 +194,19 @@ export default function GameCatalog() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by game name or App ID…"
+            placeholder={t.search}
             className="w-full bg-transparent py-3 text-white placeholder:text-zinc-400 outline-none"
           />
           {query && (
-            <button onClick={() => setQuery("")} className="text-zinc-400 hover:text-white text-sm" aria-label="Clear search">
+            <button onClick={() => setQuery("")} className="text-zinc-400 hover:text-white text-sm" aria-label={t.clear}>
               ✕
             </button>
           )}
         </label>
         <SortMenu
           value={sort}
-          options={SORTS}
+          options={t.sorts}
+          label={t.sortLabel}
           onChange={(key) => {
             setSort(key);
             setPage(1);
@@ -159,7 +216,7 @@ export default function GameCatalog() {
 
       {result && debounced && (
         <p className="mb-5 text-sm text-zinc-400">
-          {result.total.toLocaleString("en-US")} result{result.total === 1 ? "" : "s"} for “{debounced}”
+          {t.results(fmt(result.total), result.total === 1, debounced)}
         </p>
       )}
 
@@ -167,7 +224,7 @@ export default function GameCatalog() {
         <div className="glass rounded-3xl p-10 text-center text-zinc-300">
           {error}
           <div className="mt-4">
-            <button className="glass-pill" onClick={() => setRetry((r) => r + 1)}>Try again</button>
+            <button className="glass-pill" onClick={() => setRetry((r) => r + 1)}>{t.retry}</button>
           </div>
         </div>
       )}
@@ -177,18 +234,18 @@ export default function GameCatalog() {
         <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {loading
             ? Array.from({ length: 8 }, (_, i) => <SkeletonCard key={i} i={i} />)
-            : visible.map((it, i) => <GameCard key={it.appid} item={it} d={details[it.appid]} i={i} />)}
+            : visible.map((it, i) => <GameCard key={it.appid} item={it} d={details[it.appid]} i={i} lang={lang} />)}
         </div>
       )}
 
       {!loading && !error && visible.length === 0 && (
-        <div className="glass rounded-3xl p-12 text-center text-zinc-400">No games match your search.</div>
+        <div className="glass rounded-3xl p-12 text-center text-zinc-400">{t.none}</div>
       )}
 
       {/* Pager */}
       {result && result.pages > 1 && !error && (
         <div className="mt-12 flex items-center justify-center gap-2 flex-wrap">
-          <button className="glass-pill !px-4" disabled={page <= 1} onClick={() => goTo(page - 1)} aria-label="Previous page">
+          <button className="glass-pill !px-4" disabled={page <= 1} onClick={() => goTo(page - 1)} aria-label={t.prev}>
             ‹
           </button>
           {pageWindow(result.page, result.pages).map((p, i) =>
@@ -204,7 +261,7 @@ export default function GameCatalog() {
               </button>
             ),
           )}
-          <button className="glass-pill !px-4" disabled={page >= result.pages} onClick={() => goTo(page + 1)} aria-label="Next page">
+          <button className="glass-pill !px-4" disabled={page >= result.pages} onClick={() => goTo(page + 1)} aria-label={t.next}>
             ›
           </button>
         </div>
@@ -213,7 +270,8 @@ export default function GameCatalog() {
   );
 }
 
-function GameCard({ item, d, i }: { item: Item; d?: GameDetails; i: number }) {
+function GameCard({ item, d, i, lang }: { item: Item; d?: GameDetails; i: number; lang: Lang }) {
+  const t = COPY[lang];
   // Steam's real (possibly hashed) header once details arrive, the legacy CDN path until then.
   const src = d?.header || cdnHeader(item.appid);
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
@@ -239,7 +297,7 @@ function GameCard({ item, d, i }: { item: Item; d?: GameDetails; i: number }) {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
         {d?.free && (
           <span className="absolute top-3 left-3 glass-chip !text-emerald-200 !bg-emerald-500/25 !border-emerald-400/40 backdrop-blur-md">
-            Free
+            {t.free}
           </span>
         )}
       </div>
@@ -265,7 +323,7 @@ function GameCard({ item, d, i }: { item: Item; d?: GameDetails; i: number }) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             {/* The list's own timestamp is a bulk-refresh date, so prefer Steam's release date. */}
-            {released ? `Released ${released}` : `Updated ${updatedLabel(item.lm).toLowerCase()}`}
+            {released ? `${t.released} ${released}` : `${t.updated} ${updatedLabel(item.lm, lang)}`}
           </p>
         )}
       </div>

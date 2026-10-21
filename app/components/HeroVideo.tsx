@@ -1,9 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLang } from "./LanguageProvider";
 
 const SRC = "/videos/atlas-tools-trailer.mp4";
 const POSTER = "/videos/atlas-tools-trailer-poster.webp";
+
+const COPY = {
+  en: {
+    label: "Atlas Tools trailer: adding a game to the library, applying a fix, and activating a game",
+    pause: "Pause trailer",
+    play: "Play trailer",
+    soundOnLabel: "Turn sound on",
+    soundOffLabel: "Turn sound off",
+    soundOn: "Sound on",
+    soundOff: "Sound off",
+  },
+  id: {
+    label: "Trailer Atlas Tools: menambah game ke library, memasang fix, dan mengaktivasi game",
+    pause: "Jeda trailer",
+    play: "Putar trailer",
+    soundOnLabel: "Nyalakan suara",
+    soundOffLabel: "Matikan suara",
+    soundOn: "Suara on",
+    soundOff: "Suara off",
+  },
+};
 
 /**
  * Hero trailer: plays muted on a loop (browsers only allow muted autoplay), with buttons to pause it
@@ -13,6 +35,7 @@ export default function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  const t = COPY[useLang().lang];
 
   useEffect(() => {
     const v = ref.current;
@@ -47,7 +70,7 @@ export default function HeroVideo() {
         loop
         playsInline
         preload="auto"
-        aria-label="Atlas Tools trailer: adding a game to the library, applying a fix, and activating a game"
+        aria-label={t.label}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
@@ -55,7 +78,7 @@ export default function HeroVideo() {
         <button
           type="button"
           onClick={togglePlay}
-          aria-label={playing ? "Pause trailer" : "Play trailer"}
+          aria-label={playing ? t.pause : t.play}
           className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/65 text-white hover:bg-black/80 transition-colors"
         >
           {playing ? (
@@ -71,7 +94,7 @@ export default function HeroVideo() {
         <button
           type="button"
           onClick={toggleSound}
-          aria-label={muted ? "Turn sound on" : "Turn sound off"}
+          aria-label={muted ? t.soundOnLabel : t.soundOffLabel}
           aria-pressed={!muted}
           className="flex h-11 items-center gap-2 rounded-xl bg-black/65 px-3.5 text-sm font-semibold text-white hover:bg-black/80 transition-colors"
         >
@@ -83,7 +106,7 @@ export default function HeroVideo() {
               <path strokeLinecap="round" d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13" />
             )}
           </svg>
-          {muted ? "Sound on" : "Sound off"}
+          {muted ? t.soundOn : t.soundOff}
         </button>
       </div>
     </div>
