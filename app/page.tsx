@@ -4,7 +4,7 @@ import ReviewCarousel from "./components/ReviewCarousel";
 import NavBar from "./components/NavBar";
 import FAQ from "./components/FAQ";
 import InvisigalCharacter from "./components/InvisigalCharacter";
-import DownloadButton from "./components/DownloadButton";
+import DownloadSection from "./components/DownloadSection";
 import TutorialTabs from "./components/TutorialTabs";
 import FadeIn from "./components/FadeIn";
 import PauseOffscreen from "./components/PauseOffscreen";
@@ -76,13 +76,6 @@ const COPY = {
     tutorialTitle: "How to set it up",
     tutorialBody: "Watch the full walkthrough, or follow the written steps for your order type below.",
     tutorialVideo: "Atlas Tools Tutorial",
-    downloadTitle: "Download Atlas Tools",
-    downloadBody: "The Windows app you use to add games, apply fixes and get activation tickets. Install it once; updates install themselves in the background.",
-    downloadCard: "Atlas Tools for Windows",
-    downloadSpec: "Installer (.exe) with auto-update, Windows 10 / 11 64-bit",
-    downloadChrome: "Download it with Google Chrome for the fewest browser warnings.",
-    needTitle: "You also need",
-    needs: ["The Steam client installed", "An internet connection", "An Atlas Tools code from your Atlas Game Shop order"],
     reviewsTitle: "Reviews from real orders",
     reviewsBody: "Screenshots of verified purchases from Indonesian gamers. Click one to read it in full.",
     faqTitle: "Questions before you order",
@@ -142,13 +135,6 @@ const COPY = {
     tutorialTitle: "Cara pasangnya",
     tutorialBody: "Tonton video lengkapnya, atau ikuti langkah tertulis sesuai jenis order kamu di bawah.",
     tutorialVideo: "Tutorial Atlas Tools",
-    downloadTitle: "Download Atlas Tools",
-    downloadBody: "Aplikasi Windows untuk menambah game, memasang fix dan mengambil tiket aktivasi. Cukup instal sekali; update terpasang sendiri di background.",
-    downloadCard: "Atlas Tools untuk Windows",
-    downloadSpec: "Installer (.exe) dengan auto-update, Windows 10 / 11 64-bit",
-    downloadChrome: "Download pakai Google Chrome supaya peringatan browser paling sedikit.",
-    needTitle: "Yang juga kamu perlukan",
-    needs: ["Aplikasi Steam sudah terinstal", "Koneksi internet", "Kode Atlas Tools dari order Atlas Game Shop kamu"],
     reviewsTitle: "Ulasan dari order asli",
     reviewsBody: "Screenshot pembelian asli dari gamer Indonesia. Klik salah satu untuk membaca lengkap.",
     faqTitle: "Pertanyaan sebelum order",
@@ -342,30 +328,7 @@ export default async function Home() {
 
         {/* Download: install details beside the app shot */}
         <section id="download" className="py-24 md:py-28 border-t border-white/[0.06]">
-          <div className="container mx-auto px-5 md:px-6 max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-            <FadeIn>
-              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white">{t.downloadTitle}</h2>
-              <p className="mt-4 text-zinc-300 leading-relaxed">{t.downloadBody}</p>
-            </FadeIn>
-
-            <FadeIn delay={80}>
-              <div className="glass rounded-[20px] p-7 md:p-8">
-                <p className="font-bold text-white">{t.downloadCard}</p>
-                <p className="mt-1 text-sm text-zinc-400">{t.downloadSpec}</p>
-                <div className="mt-6">
-                  <DownloadButton />
-                </div>
-                <p className="mt-3 text-sm text-zinc-400">{t.downloadChrome}</p>
-
-                <h3 className="mt-8 text-sm font-semibold text-white">{t.needTitle}</h3>
-                <ul className="mt-3 space-y-2 list-disc pl-5 marker:text-lavender text-sm text-zinc-400">
-                  {t.needs.map((n) => (
-                    <li key={n}>{n}</li>
-                  ))}
-                </ul>
-              </div>
-            </FadeIn>
-          </div>
+          <DownloadSection lang={lang} />
         </section>
 
         {/* Reviews: real order screenshots, full width */}
