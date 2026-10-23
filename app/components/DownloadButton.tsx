@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { whatsappWith } from "../lib/links";
+import { WHATSAPP_NUMBER, whatsappWith } from "../lib/links";
 import { useLang } from "./LanguageProvider";
 
 // The dialog can't be dismissed for this many seconds, so the WhatsApp offer gets read.
-const LOCK_SECONDS = 5;
+const LOCK_SECONDS = 10;
 
 const SETUP_URL =
   "https://github.com/atlasjamsuy123/Atlas-tools-Update/releases/latest/download/AtlasTools-win-Setup.exe";
@@ -16,6 +16,9 @@ const COPY = {
     title: "Your download has started",
     body: "Chat with Atlas on WhatsApp to get your Atlas Tools code, or for help installing and activating your games.",
     chat: "Chat Atlas on WhatsApp",
+    phone: "No WhatsApp on this PC? Message this number from your phone:",
+    copy: "Copy",
+    copied: "Copied",
     later: "Maybe later",
     waMessage: "Hi Atlas, I just downloaded Atlas Tools. Can you help me?",
   },
@@ -24,6 +27,9 @@ const COPY = {
     title: "Download kamu sudah dimulai",
     body: "Chat Atlas di WhatsApp untuk dapat kode Atlas Tools, atau minta bantuan instal dan aktivasi game kamu.",
     chat: "Chat Atlas di WhatsApp",
+    phone: "Tidak ada WhatsApp di PC ini? Chat nomor ini dari HP kamu:",
+    copy: "Salin",
+    copied: "Tersalin",
     later: "Nanti saja",
     waMessage: "Halo Atlas, saya baru download Atlas Tools. Boleh dibantu?",
   },
@@ -40,6 +46,17 @@ export default function DownloadButton() {
   const [secondsLeft, setSecondsLeft] = useState(0);
   const locked = secondsLeft > 0;
   const leavingForChat = useRef(false); // the WhatsApp button may close it while still locked
+  const [copied, setCopied] = useState(false);
+
+  const copyNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(WHATSAPP_NUMBER);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* clipboard blocked: the number is still on screen to type */
+    }
+  };
 
   useEffect(() => {
     if (!locked) return;
@@ -104,6 +121,18 @@ export default function DownloadButton() {
             >
               {t.chat}
             </a>
+
+            {/* For people without WhatsApp on this PC: the number to message from their phone */}
+            <div className="rounded-[14px] border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-sm text-zinc-400">{t.phone}</p>
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <span className="select-all text-xl font-bold tracking-wide text-white">{WHATSAPP_NUMBER}</span>
+                <button type="button" onClick={copyNumber} aria-live="polite" className="glass-pill !min-h-10 !px-4 !text-sm">
+                  {copied ? t.copied : t.copy}
+                </button>
+              </div>
+            </div>
+
             <button type="button" onClick={dismiss} disabled={locked} className="glass-pill">
               {locked ? `${t.later} (${secondsLeft})` : t.later}
             </button>
